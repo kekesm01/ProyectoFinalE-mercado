@@ -238,3 +238,12 @@ main .containerEspecial{
 .muestra-articulo-clase:hover {
   transform: scale(1.07); 
 }
+
+.img-banner{
+  text-align: center;
+}
+
+.img-banner img{
+  width: 400px;
+  margin: 50px;
+}
