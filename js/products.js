@@ -12,19 +12,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
       data.products.forEach(product => {
         container.innerHTML += `
-          <div class="card mb-3 shadow-sm">
-            <div class="row g-0">
-              <div class="col-md-4">
+        <div class = "muestra-articulo-clase">
+              <div class = "img-product-clase">
                 <img src="${product.image}" class="img-fluid rounded-start" alt="${product.name}">
               </div>
-              <div class="col-md-8">
-                <div class="card-body">
+              <div class="txt-product-clase">
                   <h5 class="card-title">${product.name} - <span class="text-success">${product.currency} ${product.cost}</span></h5>
                   <p class="card-text">${product.description}</p>
                   <p class="card-text"><small class="text-muted">Vendidos: ${product.soldCount}</small></p>
-                </div>
               </div>
-            </div>
           </div>
         `;
       });
