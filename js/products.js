@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
         containerEspecial.innerHTML += `
         <div class = "muestra-articulo-clase">
               <div class = "img-product-clase">
-                <img src="${product.image}" class="img-fluid rounded-start" alt="${product.name}">
+                <img src="${product.image}" alt="${product.name}">
               </div>
               <div class="txt-product-clase">
                   <h5 class="card-title">${product.name} - <span class="text-success">${product.currency} ${product.cost}</span></h5>

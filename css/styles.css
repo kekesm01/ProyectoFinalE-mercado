@@ -217,4 +217,20 @@ a.custom-card:hover {
 main .containerEspecial{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  padding: 20px;
+}
+
+.img-product-clase img{
+  width: 400px;
+  border-radius: 10px;
+}
+
+.txt-product-clase{
+  padding: 20px;
+}
+
+.muestra-articulo-clase{
+  background-color: rgb(219, 219, 219);
+  border-radius: 10px;
 }
