@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const PRODUCTS_URL = "https://japceibal.github.io/emercado-api/cats_products/101.json";
-  const container = document.querySelector("main .container");
+  const containerEspecial = document.querySelector("main .containerEspecial");
 
   fetch(PRODUCTS_URL)
     .then(response => {
@@ -8,10 +8,10 @@ document.addEventListener("DOMContentLoaded", () => {
       return response.json();
     })
     .then(data => {
-      container.innerHTML = "";
+      containerEspecial.innerHTML = "";
 
       data.products.forEach(product => {
-        container.innerHTML += `
+        containerEspecial.innerHTML += `
         <div class = "muestra-articulo-clase">
               <div class = "img-product-clase">
                 <img src="${product.image}" class="img-fluid rounded-start" alt="${product.name}">

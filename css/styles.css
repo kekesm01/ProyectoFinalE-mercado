@@ -214,3 +214,7 @@ a.custom-card:hover {
 
 /* -- PRODUCTOS --*/
 
+main .containerEspecial{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
