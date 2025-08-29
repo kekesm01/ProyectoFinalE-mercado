@@ -247,3 +247,24 @@ main .containerEspecial{
   width: 400px;
   margin: 50px;
 }
+
+/* Estilos base (PC / 1366px o más.Ya están en styles.css*/
+/* Tablet */
+@media (max-width: 1024px) {
+  main .containerEspecial {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .img-product-clase img {
+    width: 100%;
+  }
+}
+
+/* Celulares */
+@media (max-width: 576px) {
+  main .containerEspecial {
+    grid-template-columns: 1fr;
+  }
+  .img-product-clase img {
+    width: 100%;
+  }
+}
