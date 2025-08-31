@@ -259,6 +259,19 @@ main .containerEspecial{
   }
 }
 
+.idUsuario {
+    color: rgba(255, 255, 255, 0.5);       
+    text-decoration: none;
+    display: block;
+    padding: 0.5rem 1rem; 
+    margin: 0;            
+}
+
+.idUsuario :hover{
+  color: rgba(255, 255, 255, 0.5) !important; 
+}
+
+
 /* Celulares */
 @media (max-width: 767px) { 
   main .containerEspecial {
