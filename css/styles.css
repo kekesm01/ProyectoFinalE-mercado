@@ -250,7 +250,7 @@ main .containerEspecial{
 
 /* Estilos base (PC / 1366px o más.Ya están en styles.css*/
 /* Tablet */
-@media (max-width: 1024px) {
+@media (max-width: 1365px) {
   main .containerEspecial {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -260,11 +260,37 @@ main .containerEspecial{
 }
 
 /* Celulares */
-@media (max-width: 576px) {
+@media (max-width: 767px) { 
   main .containerEspecial {
     grid-template-columns: 1fr;
   }
   .img-product-clase img {
+    width: 100%;
+  }
+
+  #body-login{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin: 0%;
+    padding: 0%;
+  }
+
+  #inicio-sesion img{
+    width: 100% !important;
+  }
+
+  .img-banner img{
+    width: 100%;
+    margin: 0%;
+    padding: 0%;
+  }
+
+  footer .container{
+    display: flex;
+    flex-direction: column;
     width: 100%;
   }
 }
