@@ -8,7 +8,7 @@ botonIngresar.addEventListener("click", function (e) {
 
     if (usuario !== "" && contrasena !== "") {
 
-        localStorage.setItem("usuario", "1");
+        localStorage.setItem("usuario", usuario);
         window.location.href = "index.html";
     } else {
         alert("Por favor, completa todos los campos");
