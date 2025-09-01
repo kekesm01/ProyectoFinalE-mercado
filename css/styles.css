@@ -1,3 +1,7 @@
+*{
+  box-sizing: border-box;
+}
+
 .jumbotron,
 .card-body,
 .container,
@@ -221,6 +225,14 @@ main .containerEspecial{
   padding: 20px;
 }
 
+.containerEspecial{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 0%;
+  padding: 0%;
+}
+
 .img-product-clase img{
   width: 400px;
   border-radius: 10px;
@@ -259,17 +271,7 @@ main .containerEspecial{
   }
 }
 
-.idUsuario {
-    color: rgba(255, 255, 255, 0.5);       
-    text-decoration: none;
-    display: block;
-    padding: 0.5rem 1rem; 
-    margin: 0;            
-}
 
-.idUsuario :hover{
-  color: rgba(255, 255, 255, 0.5) !important; 
-}
 
 
 /* Celulares */
