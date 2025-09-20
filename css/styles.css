@@ -261,7 +261,6 @@ main .containerEspecial{
 }
 
 /* Estilos base (PC / 1366px o más.Ya están en styles.css*/
-/* Tablet */
 @media (max-width: 1365px) {
   main .containerEspecial {
     grid-template-columns: repeat(2, 1fr);
@@ -271,10 +270,6 @@ main .containerEspecial{
   }
 }
 
-
-
-
-/* Celulares */
 @media (max-width: 767px) { 
   main .containerEspecial {
     grid-template-columns: 1fr;
@@ -307,5 +302,146 @@ main .containerEspecial{
     display: flex;
     flex-direction: column;
     width: 100%;
+  }
+}
+/* Panel lateral de filtros */
+.filter-panel {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  width: 300px;
+  height: 100%;
+  background: #f8f9fa;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+  transition: left 0.3s ease;
+  z-index: 1050;
+  overflow-y: auto; 
+}
+
+.filter-panel.open {
+  left: 0; 
+}
+
+#toggleFilterBtn {
+  background-color: orange;
+  border: none;
+  padding: 5px 15px;
+  font-size: 14px;
+  height: auto;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  margin-left: 20px;
+}
+#toggleFilterBtn:hover {
+  background-color: darkorange;
+}
+
+#applyFilterBtn,
+#clearFilterBtn {
+  padding: 5px 15px;
+  font-size: 14px;
+  height: auto;
+  border-radius: 8px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  margin-bottom: 10px; /* espacio uniforme */
+}
+
+#applyFilterBtn {
+  background-color: orange;
+}
+#applyFilterBtn:hover {
+  background-color: darkorange;
+}
+
+#clearFilterBtn {
+  background-color: gray;
+}
+#clearFilterBtn:hover {
+  background-color: darkgray;
+}
+
+#closeFilterBtn {
+  background-color: red;
+  border: none;
+  padding: 5px 15px;
+  font-size: 14px;
+  height: auto;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+}
+#closeFilterBtn:hover {
+  background-color: darkred;
+}
+
+/* TOP CONTROLS Y DROPDOWN */
+.top-controls {
+display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* alinea al inicio, no al centro */
+  flex-wrap: nowrap;
+}
+
+.sort-text {
+  cursor: pointer;
+  position: relative;
+  font-weight: normal;
+  margin-right: 20px;
+}
+
+.sort-options {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #f8f9fa;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px 0;
+  width: 130px;
+  z-index: 100;
+}
+
+.sort-text.active .sort-options {
+  display: block;
+}
+
+.sort-options div {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.sort-options div:hover {
+  background-color: #eee;
+}
+
+/* RESPONSIVE TOP CONTROLS Y BOTONES */
+@media (max-width: 1024px) {
+  .top-controls {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 767px) {
+  #applyFilterBtn,
+  #clearFilterBtn {
+    width: 90%;
+    margin: 5px auto;
+    height: 40px;
+  }
+  #closeFilterBtn {
+    width: 90%;
   }
 }
