@@ -41,7 +41,37 @@
     <div class="img-banner">
       <img src="img/login.png" alt="E-mercado">
     </div>
-    <div class="containerEspecial">
+
+<div class="top-controls">
+  <!--Botón Filtros-->
+  <button id="toggleFilterBtn" class="btn btn-warning mb-3">Filtros</button>
+  <!-- Ordenar dropdown -->
+  <div id="sortText" class="sort-text">
+    Ordenar ▼
+    <div id="sortOptions" class="sort-options">
+      <div id="sortLow">Menor precio</div>
+      <div id="sortHigh">Mayor precio</div>
+    </div>
+  </div>
+</div>
+<!--Panel de filtros-->
+<div id="filterPanel" class="filter-panel">
+  <button id="closeFilterBtn" class="btn btn-danger mb-3">Cerrar</button>
+  <h5>Filtro</h5>
+  <div class="form-group">
+    <label for="minPrice">Precio mínimo</label>
+    <input type="number" id="minPrice" class="form-control" placeholder="Ej: 100">
+  </div>
+  <div class="form-group">
+    <label for="maxPrice">Precio máximo</label>
+    <input type="number" id="maxPrice" class="form-control" placeholder="Ej: 1000">
+  </div>
+  <button id="applyFilterBtn" class="btn btn-success mt-2">Aplicar</button>
+  <button id="clearFilterBtn" class="btn btn-secondary mt-2">Limpiar</button>
+</div>
+
+    
+  <div class="containerEspecial">
       <div class="alert alert-danger text-center" role="alert">
         <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
       </div>
