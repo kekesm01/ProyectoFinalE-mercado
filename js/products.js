@@ -1,8 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const PRODUCTS_URL = "https://japceibal.github.io/emercado-api/cats_products/101.json";
+  const PRODUCTS_URL = "https://japceibal.github.io/emercado-api/cats_products/";
   const containerEspecial = document.querySelector("main .containerEspecial");
 
-  fetch(PRODUCTS_URL)
+  let idCategoria = localStorage.getItem("catID");
+
+  const PRODUCTS_SELECTED = PRODUCTS_URL + idCategoria + ".json";
+
+  fetch(PRODUCTS_SELECTED)
     .then(response => {
       if (!response.ok) throw new Error("Error en la respuesta");
       return response.json();
