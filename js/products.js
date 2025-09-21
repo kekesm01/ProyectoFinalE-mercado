@@ -76,8 +76,8 @@ document.addEventListener("DOMContentLoaded", () => {
       containerEspecial.innerHTML = `<div class="alert alert-warning text-center">No hay productos en este rango de precio</div>`;
     } else {
       products.forEach(product => {
-        containerEspecial.innerHTML += `
-          <div class="muestra-articulo-clase">
+        const productHTML = `
+          <div class="muestra-articulo-clase product-item" data-product-id="${product.id}" style="cursor:pointer;">
             <div class="img-product-clase">
               <img src="${product.image}" alt="${product.name}">
             </div>
@@ -88,6 +88,16 @@ document.addEventListener("DOMContentLoaded", () => {
               <p><small class="text-muted">Vendidos: ${product.soldCount}</small></p>
             </div>
           </div>`;
+        containerEspecial.innerHTML += productHTML;
+      });
+
+      // Agregar evento a cada producto
+      document.querySelectorAll('.product-item').forEach(item => {
+        item.addEventListener('click', function() {
+          const productId = this.getAttribute('data-product-id');
+          localStorage.setItem('productID', productId);
+          window.location = 'product-info.html';
+        });
       });
     }
   }
