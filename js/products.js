@@ -2,10 +2,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const PRODUCTS_URL = "https://japceibal.github.io/emercado-api/cats_products/";
   const containerEspecial = document.querySelector("main .containerEspecial");
 
-  let filteredProducts = []; 
+  let filteredProducts = [];
   let minPrice = null;
   let maxPrice = null;
-  
+
   let idCategoria = localStorage.getItem("catID");
 
   const PRODUCTS_SELECTED = PRODUCTS_URL + idCategoria + ".json";
@@ -32,6 +32,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const minPriceInput = document.getElementById("minPrice");
   const maxPriceInput = document.getElementById("maxPrice");
   const closeBtn = document.getElementById("closeFilterBtn");
+
+  const buscador = document.getElementById("buscador");
+
+  buscador.addEventListener("input", () => {
+    applySearch();
+  });
+
 
   closeBtn.addEventListener("click", () => {
     filterPanel.classList.remove("active", "open");
@@ -61,11 +68,21 @@ document.addEventListener("DOMContentLoaded", () => {
     if (minPrice !== null || maxPrice !== null) {
       productsToRender = filteredProducts.filter(p => {
         return (minPrice === null || p.cost >= minPrice) &&
-               (maxPrice === null || p.cost <= maxPrice);
+          (maxPrice === null || p.cost <= maxPrice);
       });
     }
 
     renderFilteredProducts(productsToRender);
+  }
+
+  function applySearch() {
+    let texto = buscador.value.toLowerCase();
+    let results = filteredProducts.filter(p => {
+      let titulo = p.name.toLowerCase();
+      let descripcion = p.description.toLowerCase();
+      return titulo.indexOf(texto) !== -1 || descripcion.indexOf(texto) !== -1;
+    });
+    renderFilteredProducts(results);
   }
 
   // Función para renderizar productos
@@ -93,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Agregar evento a cada producto
       document.querySelectorAll('.product-item').forEach(item => {
-        item.addEventListener('click', function() {
+        item.addEventListener('click', function () {
           const productId = this.getAttribute('data-product-id');
           localStorage.setItem('productID', productId);
           window.location = 'product-info.html';
