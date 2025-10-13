@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
+
   const productId = localStorage.getItem("productID");
 
   if (!productId) {
@@ -90,42 +91,35 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
 
-      // Obtener productos relacionados
-      fetch(PRODUCTS_URL + product.category_id + ".json")
-       .then(res => res.json())
-       .then(data => {
-          const relacionados = data.products
-            .filter(p => p.id != product.id) // Excluye el producto actual
-            .slice(0, 3); // Solo 3 productos
+      // Obtener productos relacionados desde la propiedad relatedProducts
+const relacionados = product.relatedProducts;
 
-         if (relacionados.length > 0 && relacionadosContainer) {
-            relacionadosContainer.innerHTML = `
-             <h4 class="mb-3">Productos relacionados</h4>
-              <div class="row">
-                ${relacionados.map(p => `
-                  <div class="col-md-4 mb-3">
-                     <div class="card h-100 producto-relacionado" data-id="${p.id}" style="cursor:pointer;">
-                       <img src="${p.image}" class="card-img-top" alt="${p.name}" style="height:200px;object-fit:cover;">
-                      <div class="card-body">
-                        <h5 class="card-title">${p.name}</h5>
-                        <p class="card-text">${p.currency} ${p.cost}</p>
-                      </div>
-                    </div>
-                  </div>
-                `).join('')}
-              </div>
-           `;
+if (relacionados.length > 0 && relacionadosContainer) {
+  relacionadosContainer.innerHTML = `
+    <div class="row">
+      ${relacionados.map(p => `
+        <div class="col-md-4 mb-3">
+          <div class="card h-100 producto-relacionado" data-id="${p.id}" style="cursor:pointer;">
+            <img src="${p.image}" class="card-img-top" alt="${p.name}" style="height:200px;object-fit:cover;">
+            <div class="card-body">
+              <h5 class="card-title">${p.name}</h5>
+            </div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
 
-         // Evento click en cada producto relacionado para cargar nuevo producto
-         document.querySelectorAll('.producto-relacionado').forEach(card => {
-            card.addEventListener('click', function () {
-              const newId = this.getAttribute('data-id');
-              localStorage.setItem('productID', newId);
-              location.reload();
-            });
-          });
-        }
-      });
+  // Evento click para cargar el producto relacionado
+  document.querySelectorAll('.producto-relacionado').forEach(card => {
+    card.addEventListener('click', function () {
+      const newId = this.getAttribute('data-id');
+      localStorage.setItem('productID', newId);
+      location.reload();
+    });
+  });
+}
+
 
 
     })
@@ -135,42 +129,3 @@ document.addEventListener("DOMContentLoaded", () => {
       container.innerHTML = `<div class="alert alert-danger">No se pudo cargar la información del producto.</div>`;
     });
 });
-
-// Obtener productos relacionados
-const relacionadosContainer = document.getElementById("lista-productos-relacionados");
-
-fetch(PRODUCTS_URL + product.category_id + ".json")
-  .then(res => res.json())
-  .then(data => {
-    const relacionados = data.products
-      .filter(p => p.id != product.id) // Excluye el producto actual
-      .slice(0, 3); // Solo 3 productos
-
-    if (relacionados.length > 0 && relacionadosContainer) {
-      relacionadosContainer.innerHTML = `
-        <h4 class="mb-3">Productos relacionados</h4>
-        <div class="row">
-          ${relacionados.map(p => `
-            <div class="col-md-4 mb-3">
-              <div class="card h-100 producto-relacionado" data-id="${p.id}" style="cursor:pointer;">
-                <img src="${p.image}" class="card-img-top" alt="${p.name}" style="height:200px;object-fit:cover;">
-                <div class="card-body">
-                  <h5 class="card-title">${p.name}</h5>
-                  <p class="card-text">${p.currency} ${p.cost}</p>
-                </div>
-              </div>
-            </div>
-          `).join('')}
-        </div>
-      `;
-
-      // Evento click en cada producto relacionado para cargar nuevo producto
-      document.querySelectorAll('.producto-relacionado').forEach(card => {
-        card.addEventListener('click', function () {
-          const newId = this.getAttribute('data-id');
-          localStorage.setItem('productID', newId);
-          location.reload();
-        });
-      });
-    }
-  });
