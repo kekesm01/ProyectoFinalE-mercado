@@ -260,6 +260,11 @@ main .containerEspecial{
   margin: 50px;
 }
 
+/* PRODUCTS-INFO*/
+.volverAtrasProducts-info{
+  text-align: right;
+}
+
 /* Estilos base (PC / 1366px o más.Ya están en styles.css*/
 @media (max-width: 1365px) {
   main .containerEspecial {

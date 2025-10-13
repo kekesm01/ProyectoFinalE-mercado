@@ -42,7 +42,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 <p>${product.description}</p>
               </div>
             </div>
+            <div class="volverAtrasProducts-info">
+              <a href="products.html">Volver atrás</a>
+            </div>
           </div>
+
         </div>
       `;
 
