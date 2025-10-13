@@ -1,6 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
   const PRODUCT_INFO_URL = "https://japceibal.github.io/emercado-api/products/";
   const container = document.querySelector("main .container");
+  const relacionadosContainer = document.getElementById("lista-productos-relacionados");
+  const CATEGORY_PRODUCTS_URL = "https://japceibal.github.io/emercado-api/cats_products/";
+
+
 
   const productId = localStorage.getItem("productID");
 
@@ -72,6 +76,9 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
 
         </div>
+
+        
+
       `;
 
       // Lógica para cambiar la imagen grande al hacer click en miniatura
@@ -82,8 +89,88 @@ document.addEventListener("DOMContentLoaded", () => {
           imgGrande.src = this.src;
         });
       });
+
+      // Obtener productos relacionados
+      fetch(PRODUCTS_URL + product.category_id + ".json")
+       .then(res => res.json())
+       .then(data => {
+          const relacionados = data.products
+            .filter(p => p.id != product.id) // Excluye el producto actual
+            .slice(0, 3); // Solo 3 productos
+
+         if (relacionados.length > 0 && relacionadosContainer) {
+            relacionadosContainer.innerHTML = `
+             <h4 class="mb-3">Productos relacionados</h4>
+              <div class="row">
+                ${relacionados.map(p => `
+                  <div class="col-md-4 mb-3">
+                     <div class="card h-100 producto-relacionado" data-id="${p.id}" style="cursor:pointer;">
+                       <img src="${p.image}" class="card-img-top" alt="${p.name}" style="height:200px;object-fit:cover;">
+                      <div class="card-body">
+                        <h5 class="card-title">${p.name}</h5>
+                        <p class="card-text">${p.currency} ${p.cost}</p>
+                      </div>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+           `;
+
+         // Evento click en cada producto relacionado para cargar nuevo producto
+         document.querySelectorAll('.producto-relacionado').forEach(card => {
+            card.addEventListener('click', function () {
+              const newId = this.getAttribute('data-id');
+              localStorage.setItem('productID', newId);
+              location.reload();
+            });
+          });
+        }
+      });
+
+
     })
+
+
     .catch(error => {
       container.innerHTML = `<div class="alert alert-danger">No se pudo cargar la información del producto.</div>`;
     });
 });
+
+// Obtener productos relacionados
+const relacionadosContainer = document.getElementById("lista-productos-relacionados");
+
+fetch(PRODUCTS_URL + product.category_id + ".json")
+  .then(res => res.json())
+  .then(data => {
+    const relacionados = data.products
+      .filter(p => p.id != product.id) // Excluye el producto actual
+      .slice(0, 3); // Solo 3 productos
+
+    if (relacionados.length > 0 && relacionadosContainer) {
+      relacionadosContainer.innerHTML = `
+        <h4 class="mb-3">Productos relacionados</h4>
+        <div class="row">
+          ${relacionados.map(p => `
+            <div class="col-md-4 mb-3">
+              <div class="card h-100 producto-relacionado" data-id="${p.id}" style="cursor:pointer;">
+                <img src="${p.image}" class="card-img-top" alt="${p.name}" style="height:200px;object-fit:cover;">
+                <div class="card-body">
+                  <h5 class="card-title">${p.name}</h5>
+                  <p class="card-text">${p.currency} ${p.cost}</p>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      // Evento click en cada producto relacionado para cargar nuevo producto
+      document.querySelectorAll('.producto-relacionado').forEach(card => {
+        card.addEventListener('click', function () {
+          const newId = this.getAttribute('data-id');
+          localStorage.setItem('productID', newId);
+          location.reload();
+        });
+      });
+    }
+  });
