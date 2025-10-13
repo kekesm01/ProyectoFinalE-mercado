@@ -31,9 +31,11 @@ document.addEventListener("DOMContentLoaded", () => {
               </div>
               <div class="col-md-6">
                 <h2>${product.name}</h2>
-                <h4 class="text-success">${product.currency} ${product.cost}</h4>
+                <h2 class="text-success">${product.currency} ${product.cost}</h2>
                 <p><strong>Vendidos:</strong> ${product.soldCount}</p>
                 <p><strong>Categoría:</strong> ${product.category}</p>
+                <p><strong>Calificacion: s/c<strong></p>
+                <a href="#comentarios"><strong>Ver opiniones:</strong></a>
               </div>
             </div>
             <div class="row mt-4">
@@ -41,6 +43,28 @@ document.addEventListener("DOMContentLoaded", () => {
                 <h5>Descripción del producto</h5>
                 <p>${product.description}</p>
               </div>
+            </div>
+            <div class="calificación-productos">
+              <h5>Califica este producto</h5>
+              <div class="rating">
+                 <input type="radio" id="star1" name="rating" value="1">
+                <label for="star1">1 ★</label>
+
+                 <input type="radio" id="star2" name="rating" value="2">
+                 <label for="star2">2 ★</label>
+
+                 <input type="radio" id="star3" name="rating" value="3">
+                  <label for="star3">3 ★</label>
+
+                 <input type="radio" id="star4" name="rating" value="4">
+                 <label for="star4">4 ★</label>
+
+                <input type="radio" id="star5" name="rating" value="5">
+                 <label for="star5">5 ★</label>
+              </div>
+              <textarea placeholder="Escribe tu comentario..."></textarea>
+              <br>
+              <button onclick="enviarCalificación()">Enviar</button>
             </div>
             <div class="volverAtrasProducts-info">
               <a href="products.html">Volver atrás</a>
@@ -54,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const miniaturas = container.querySelectorAll('.miniatura');
       const imgGrande = container.querySelector('#img-grande');
       miniaturas.forEach(mini => {
-        mini.addEventListener('click', function() {
+        mini.addEventListener('click', function () {
           imgGrande.src = this.src;
         });
       });
