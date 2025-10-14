@@ -4,9 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const relacionadosContainer = document.getElementById("lista-productos-relacionados");
   const CATEGORY_PRODUCTS_URL = "https://japceibal.github.io/emercado-api/cats_products/";
 
-
-
-
   const productId = localStorage.getItem("productID");
 
   if (!productId) {
@@ -75,11 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <a href="products.html">Volver atrás</a>
             </div>
           </div>
-
         </div>
-
-        
-
       `;
 
       // Lógica para cambiar la imagen grande al hacer click en miniatura
@@ -91,40 +84,85 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
 
-      // Obtener productos relacionados desde la propiedad relatedProducts
-const relacionados = product.relatedProducts;
+      // === Productos relacionados ===
+      const relacionados = product.relatedProducts;
 
-if (relacionados.length > 0 && relacionadosContainer) {
-  relacionadosContainer.innerHTML = `
-    <div class="row">
-      ${relacionados.map(p => `
-        <div class="col-md-4 mb-3">
-          <div class="card h-100 producto-relacionado" data-id="${p.id}" style="cursor:pointer;">
-            <img src="${p.image}" class="card-img-top" alt="${p.name}" style="height:200px;object-fit:cover;">
-            <div class="card-body">
-              <h5 class="card-title">${p.name}</h5>
-            </div>
+      if (relacionados.length > 0 && relacionadosContainer) {
+        relacionadosContainer.innerHTML = `
+          <div class="row">
+            ${relacionados.map(p => `
+              <div class="col-md-4 mb-3">
+                <div class="card h-100 producto-relacionado" data-id="${p.id}" style="cursor:pointer;">
+                  <img src="${p.image}" class="card-img-top" alt="${p.name}" style="height:200px;object-fit:cover;">
+                  <div class="card-body">
+                    <h5 class="card-title">${p.name}</h5>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
           </div>
-        </div>
-      `).join('')}
-    </div>
-  `;
+        `;
 
-  // Evento click para cargar el producto relacionado
-  document.querySelectorAll('.producto-relacionado').forEach(card => {
-    card.addEventListener('click', function () {
-      const newId = this.getAttribute('data-id');
-      localStorage.setItem('productID', newId);
-      location.reload();
-    });
-  });
-}
+        document.querySelectorAll('.producto-relacionado').forEach(card => {
+          card.addEventListener('click', function () {
+            const newId = this.getAttribute('data-id');
+            localStorage.setItem('productID', newId);
+            location.reload();
+          });
+        });
+      }
 
+      // === COMENTARIOS DEL PRODUCTO ===
+      const COMMENTS_URL = `https://japceibal.github.io/emercado-api/products_comments/${productId}.json`;
 
+      fetch(COMMENTS_URL)
+        .then(response => {
+          if (!response.ok) throw new Error("Error al obtener comentarios");
+          return response.json();
+        })
+        .then(comments => {
+          mostrarComentarios(comments);
+        })
+        .catch(error => {
+          console.error("Error al obtener comentarios:", error);
+          const cont = document.getElementById("lista-comentarios");
+          if (cont) cont.innerHTML = `<div class="alert alert-warning">No se pudieron cargar los comentarios.</div>`;
+        });
+
+      // Función para mostrar estrellas
+      function mostrarEstrellas(score) {
+        let estrellas = "";
+        for (let i = 1; i <= 5; i++) {
+          estrellas += i <= score ? "★" : "☆";
+        }
+        return `<span class="text-warning">${estrellas}</span>`;
+      }
+
+      // Función para mostrar comentarios en HTML
+      function mostrarComentarios(lista) {
+        const contenedor = document.getElementById("lista-comentarios");
+        if (!contenedor) return;
+        let html = "";
+
+        lista.forEach(c => {
+          html += `
+            <div class="comentario card mb-3 shadow-sm">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h6 class="mb-0"><strong>${c.user}</strong></h6>
+                  <small class="text-muted">${c.dateTime}</small>
+                </div>
+                <p class="mt-1 mb-1">${mostrarEstrellas(c.score)}</p>
+                <p class="mb-0">${c.description}</p>
+              </div>
+            </div>
+          `;
+        });
+
+        contenedor.innerHTML = html;
+      }
 
     })
-
-
     .catch(error => {
       container.innerHTML = `<div class="alert alert-danger">No se pudo cargar la información del producto.</div>`;
     });
