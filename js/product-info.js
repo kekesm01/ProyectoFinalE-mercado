@@ -162,6 +162,64 @@ document.addEventListener("DOMContentLoaded", () => {
         contenedor.innerHTML = html;
       }
 
+      // Busca el botón y los campos del formulario de calificación
+      function agregarManejadorCalificacion() {
+        const btn = document.querySelector('.calificación-productos button');
+        const textarea = document.querySelector('.calificación-productos textarea');
+        const ratingInputs = document.querySelectorAll('.calificación-productos input[name="rating"]');
+        const listaComentarios = document.getElementById("lista-comentarios");
+
+        if (btn && textarea && ratingInputs.length && listaComentarios) {
+          btn.addEventListener('click', function () {
+            // Obtener el puntaje seleccionado
+            let puntaje = 0;
+            ratingInputs.forEach(input => {
+              if (input.checked) puntaje = parseInt(input.value);
+            });
+
+            const texto = textarea.value.trim();
+            if (!texto || puntaje === 0) {
+              alert("Debes escribir un comentario y seleccionar una calificación.");
+              return;
+            }
+
+            // Simular usuario y fecha
+            const usuario = localStorage.getItem("usuario") || "Usuario";
+            const fecha = new Date().toLocaleString();
+
+            // Generar estrellas
+            let estrellas = "";
+            for (let i = 1; i <= 5; i++) {
+              estrellas += i <= puntaje ? "★" : "☆";
+            }
+
+            // Crear el HTML del nuevo comentario
+            const nuevoComentario = document.createElement("div");
+            nuevoComentario.className = "comentario card mb-3 shadow-sm";
+            nuevoComentario.innerHTML = `
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h6 class="mb-0"><strong>${usuario}</strong></h6>
+                  <small class="text-muted">${fecha}</small>
+                </div>
+                <p class="mt-1 mb-1"><span class="text-warning">${estrellas}</span></p>
+                <p class="mb-0">${texto}</p>
+              </div>
+            `;
+
+            // Agregar el comentario al final de la lista
+            listaComentarios.appendChild(nuevoComentario);
+
+            // Limpiar campos
+            textarea.value = "";
+            ratingInputs.forEach(input => input.checked = false);
+          });
+        }
+      }
+
+      // Llama a la función después de renderizar el producto
+      agregarManejadorCalificacion();
+
     })
     .catch(error => {
       container.innerHTML = `<div class="alert alert-danger">No se pudo cargar la información del producto.</div>`;
