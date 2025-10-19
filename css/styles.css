@@ -524,29 +524,21 @@ body.oscuro #filterPanelPerfil {
 
 body.oscuro .containerEspecial {
   background-color: #2a2a2a;
-  /* color oscuro de fondo */
   color: white;
-  /* texto si lo tiene */
   border-radius: 25px;
 }
 
 /* Artículos en tema oscuro */
 body.oscuro .muestra-articulo-clase {
   background-color: #3a3a3a;
-  /* gris más oscuro */
   color: white;
-  /* texto si lo tiene */
   border-radius: 10px;
-  /* mantenemos el borde redondeado */
 }
 
 body.oscuro #cat-list-container {
   background-color: #3a3a3a;
-  /* gris más oscuro */
   color: white;
-  /* texto si lo tiene */
   border-radius: 10px;
-  /* mantenemos el borde redondeado */
 }
 
 body.oscuro button {
