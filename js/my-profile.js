@@ -12,7 +12,7 @@ if (temaGuardado === "oscuro") {
 }
 
 // === Código del perfil ===
-=======
+
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("profileForm");
   const emailInput = document.getElementById("email");
