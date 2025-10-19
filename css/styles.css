@@ -523,58 +523,73 @@ body.oscuro #filterPanelPerfil {
 }
 
 body.oscuro .containerEspecial {
-  background-color: #2a2a2a; /* color oscuro de fondo */
-  color: white;              /* texto si lo tiene */
+  background-color: #2a2a2a;
+  /* color oscuro de fondo */
+  color: white;
+  /* texto si lo tiene */
   border-radius: 25px;
 }
 
 /* Artículos en tema oscuro */
 body.oscuro .muestra-articulo-clase {
-  background-color: #3a3a3a; /* gris más oscuro */
-  color: white;               /* texto si lo tiene */
-  border-radius: 10px;        /* mantenemos el borde redondeado */
+  background-color: #3a3a3a;
+  /* gris más oscuro */
+  color: white;
+  /* texto si lo tiene */
+  border-radius: 10px;
+  /* mantenemos el borde redondeado */
 }
 
-body.oscuro #cat-list-container{
-  background-color: #3a3a3a; /* gris más oscuro */
-  color: white;               /* texto si lo tiene */
-  border-radius: 10px;        /* mantenemos el borde redondeado */
+body.oscuro #cat-list-container {
+  background-color: #3a3a3a;
+  /* gris más oscuro */
+  color: white;
+  /* texto si lo tiene */
+  border-radius: 10px;
+  /* mantenemos el borde redondeado */
 }
 
-body.oscuro button{
-  background-color: #3a3a3a; 
-  color: white;         
+body.oscuro button {
+  background-color: #3a3a3a;
+  color: white;
 }
 
-body.oscuro #lista-productos-relacionados{
-  background-color: #3a3a3a; 
-  color: white;             
-  border-radius: 10px;      
+body.oscuro #lista-productos-relacionados {
+  background-color: #3a3a3a;
+  color: white;
+  border-radius: 10px;
 }
 
-body.oscuro .container{
-  background-color: #1e1e1e; 
-  color: white;             
-  border-radius: 10px; 
+body.oscuro .container {
+  background-color: #1e1e1e;
+  color: white;
+  border-radius: 10px;
 }
 
-body.oscuro .card-body{
-  background-color: #3a3a3a; 
-  color: white;             
-  border-radius: 10px; 
+body.oscuro .card-body {
+  background-color: #3a3a3a;
+  color: white;
+  border-radius: 10px;
   margin: 0;
   border: 1px;
   border-style: solid;
 }
 
-body.oscuro .muestra-articulo-clase{
-  background-color: #3a3a3a; 
-  color: white;             
-  border-radius: 10px; 
+body.oscuro .muestra-articulo-clase {
+  background-color: #3a3a3a;
+  color: white;
+  border-radius: 10px;
 }
 
-body.oscuro .list-group-item{
-  background-color: #3a3a3a; 
-  color: white;             
-  border-radius: 10px; 
+body.oscuro .list-group-item {
+  background-color: #3a3a3a;
+  color: white;
+  border-radius: 10px;
+}
+
+body.oscuro .m-3 {
+  background-color: #3a3a3a;
+  color: white;
+  margin: 0px !important;
+  padding: 1rem;
 }

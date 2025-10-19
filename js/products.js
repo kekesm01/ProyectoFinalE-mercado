@@ -2,6 +2,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const PRODUCTS_URL = "https://japceibal.github.io/emercado-api/cats_products/";
   const containerEspecial = document.querySelector("main .containerEspecial");
 
+  const temaGuardado = localStorage.getItem("tema"); // lee el tema guardado
+  const body = document.body;
+  const botonTema = document.getElementById("botonTema"); // si tenés un botón con texto/icono
+
+  if (temaGuardado === "oscuro") {
+    body.classList.add("oscuro");
+    if (botonTema) botonTema.innerHTML = "Tema oscuro &#127769;"; // 🌙
+  } else {
+    body.classList.remove("oscuro");
+    if (botonTema) botonTema.innerHTML = "Tema claro &#127774;"; // 🌞
+  }
+
   let filteredProducts = [];
   let minPrice = null;
   let maxPrice = null;
