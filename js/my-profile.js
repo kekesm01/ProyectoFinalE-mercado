@@ -1,3 +1,4 @@
+
 const temaGuardado = localStorage.getItem("tema"); // lee el tema guardado
 const body = document.body;
 const botonTema = document.getElementById("botonTema"); // si tenés un botón con texto/icono
@@ -11,6 +12,7 @@ if (temaGuardado === "oscuro") {
 }
 
 // === Código del perfil ===
+=======
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("profileForm");
   const emailInput = document.getElementById("email");
@@ -50,4 +52,6 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("profileData", JSON.stringify(data));
     alert("Perfil guardado correctamente");
   });
+
 });
+
