@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   `).join('')}
                 </div>
                 <div class="flex-grow-1 d-flex align-items-center justify-content-center">
-                  <img id="img-grande" src="${product.images[0]}" class="img-fluid mb-3" alt="${product.name}" style="max-height:350px;max-width:100%;">
+                  <img id="img-grande" src="${product.images[0]}" class="img-fluid mb-3" alt="${product.name}" style="max-height:350px;max-width:100%;border-radius: 15px;">
                 </div>
               </div>
               <div class="col-md-6">

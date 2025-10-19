@@ -1,4 +1,4 @@
-*{
+* {
   box-sizing: border-box;
 }
 
@@ -218,14 +218,14 @@ a.custom-card:hover {
 
 /* -- PRODUCTOS --*/
 
-main .containerEspecial{
+main .containerEspecial {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
   padding: 20px;
 }
 
-.containerEspecial{
+.containerEspecial {
   display: flex;
   justify-content: center;
   width: 100%;
@@ -233,45 +233,45 @@ main .containerEspecial{
   padding: 0%;
 }
 
-.img-product-clase img{
+.img-product-clase img {
   width: 400px;
   border-radius: 10px;
 }
 
-.txt-product-clase{
+.txt-product-clase {
   padding: 20px;
 }
 
-.muestra-articulo-clase{
+.muestra-articulo-clase {
   background-color: rgb(219, 219, 219);
   border-radius: 10px;
 }
 
 .muestra-articulo-clase:hover {
-  transform: scale(1.07); 
+  transform: scale(1.07);
 }
 
-.img-banner{
+.img-banner {
   text-align: center;
 }
 
-.img-banner img{
+.img-banner img {
   width: 400px;
   margin: 50px;
 }
 
 /* PRODUCTS-INFO*/
-.volverAtrasProducts-info{
+.volverAtrasProducts-info {
   text-align: right;
 }
 
-textarea{
+textarea {
   width: 100%;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-.text-success{
+.text-success {
   font-size: 35px;
 }
 
@@ -281,20 +281,22 @@ textarea{
   main .containerEspecial {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .img-product-clase img {
     width: 100%;
   }
 }
 
-@media (max-width: 767px) { 
+@media (max-width: 767px) {
   main .containerEspecial {
     grid-template-columns: 1fr;
   }
+
   .img-product-clase img {
     width: 100%;
   }
 
-  #body-login{
+  #body-login {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -304,22 +306,23 @@ textarea{
     padding: 0%;
   }
 
-  #inicio-sesion img{
+  #inicio-sesion img {
     width: 100% !important;
   }
 
-  .img-banner img{
+  .img-banner img {
     width: 100%;
     margin: 0%;
     padding: 0%;
   }
 
-  footer .container{
+  footer .container {
     display: flex;
     flex-direction: column;
     width: 100%;
   }
 }
+
 /* Panel lateral de filtros */
 .filter-panel {
   position: fixed;
@@ -329,14 +332,14 @@ textarea{
   height: 100%;
   background: #f8f9fa;
   padding: 20px;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
   transition: left 0.3s ease;
   z-index: 1050;
-  overflow-y: auto; 
+  overflow-y: auto;
 }
 
 .filter-panel.open {
-  left: 0; 
+  left: 0;
 }
 
 #toggleFilterBtn {
@@ -350,6 +353,7 @@ textarea{
   cursor: pointer;
   margin-left: 20px;
 }
+
 #toggleFilterBtn:hover {
   background-color: darkorange;
 }
@@ -365,12 +369,14 @@ textarea{
   cursor: pointer;
   display: block;
   width: 100%;
-  margin-bottom: 10px; /* espacio uniforme */
+  margin-bottom: 10px;
+  /* espacio uniforme */
 }
 
 #applyFilterBtn {
   background-color: orange;
 }
+
 #applyFilterBtn:hover {
   background-color: darkorange;
 }
@@ -378,6 +384,7 @@ textarea{
 #clearFilterBtn {
   background-color: gray;
 }
+
 #clearFilterBtn:hover {
   background-color: darkgray;
 }
@@ -397,15 +404,45 @@ textarea{
   transform: translateX(-50%);
   width: 80%;
 }
+
 #closeFilterBtn:hover {
   background-color: darkred;
 }
 
+/* Panel filtro perfil*/
+.filter-panel-perfil {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  /* empieza oculto a la derecha */
+  width: 300px;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  transition: right 0.3s ease;
+  /* animación de entrada */
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Cuando se abre */
+.filter-panel-perfil.open {
+  right: 0;
+  /* se desplaza a la vista */
+}
+
+/*--------------------------------------------------------------------------------------------*/
+
+
 /* TOP CONTROLS Y DROPDOWN */
 .top-controls {
-display: flex;
+  display: flex;
   justify-content: space-between;
-  align-items: flex-start; /* alinea al inicio, no al centro */
+  align-items: flex-start;
+  /* alinea al inicio, no al centro */
   flex-wrap: nowrap;
 }
 
@@ -451,17 +488,93 @@ display: flex;
 }
 
 @media (max-width: 767px) {
+
   #applyFilterBtn,
   #clearFilterBtn {
     width: 90%;
     margin: 5px auto;
     height: 40px;
   }
+
   #closeFilterBtn {
     width: 90%;
   }
 }
 
 main .container {
-  margin-top: 150px; /* Puedes ajustar el valor según lo que prefieras */
+  margin-top: 150px;
+  /* Puedes ajustar el valor según lo que prefieras */
+}
+
+
+/*Tema oscuro*/
+body.oscuro {
+  background-color: #1e1e1e;
+  color: white;
+}
+
+.oscuro header {
+  background: #333;
+}
+
+body.oscuro #filterPanelPerfil {
+  background-color: #2b2b2b;
+  color: white;
+}
+
+body.oscuro .containerEspecial {
+  background-color: #2a2a2a; /* color oscuro de fondo */
+  color: white;              /* texto si lo tiene */
+  border-radius: 25px;
+}
+
+/* Artículos en tema oscuro */
+body.oscuro .muestra-articulo-clase {
+  background-color: #3a3a3a; /* gris más oscuro */
+  color: white;               /* texto si lo tiene */
+  border-radius: 10px;        /* mantenemos el borde redondeado */
+}
+
+body.oscuro #cat-list-container{
+  background-color: #3a3a3a; /* gris más oscuro */
+  color: white;               /* texto si lo tiene */
+  border-radius: 10px;        /* mantenemos el borde redondeado */
+}
+
+body.oscuro button{
+  background-color: #3a3a3a; 
+  color: white;         
+}
+
+body.oscuro #lista-productos-relacionados{
+  background-color: #3a3a3a; 
+  color: white;             
+  border-radius: 10px;      
+}
+
+body.oscuro .container{
+  background-color: #1e1e1e; 
+  color: white;             
+  border-radius: 10px; 
+}
+
+body.oscuro .card-body{
+  background-color: #3a3a3a; 
+  color: white;             
+  border-radius: 10px; 
+  margin: 0;
+  border: 1px;
+  border-style: solid;
+}
+
+body.oscuro .muestra-articulo-clase{
+  background-color: #3a3a3a; 
+  color: white;             
+  border-radius: 10px; 
+}
+
+body.oscuro .list-group-item{
+  background-color: #3a3a3a; 
+  color: white;             
+  border-radius: 10px; 
 }

@@ -31,7 +31,7 @@
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link idUsuario" href="my-profile.html"></a>
+            <button id="personalizacionPerfil" class="btn btn-warning mb-3"></button>
           </li>
         </ul>
       </div>
@@ -39,43 +39,48 @@
   </nav>
   <main class="pb-5 container">
     <div class="img-banner">
-      <img src="img/login.png" alt="E-mercado">
+      <img src="img/login.png" alt="E-mercado"  style="border-radius: 25px;">
     </div>
 
-<div class="top-controls">
-  <!--Botón Filtros-->
-  <button id="toggleFilterBtn" class="btn btn-warning mb-3">Filtros</button>
+    <div class="top-controls">
+      <!--Botón Filtros-->
+      <button id="toggleFilterBtn" class="btn btn-warning mb-3">Filtros</button>
 
-    <!--buscador-->
-  <input type="search" id="buscador" placeholder="Buscar productos...">
+      <!--buscador-->
+      <input type="search" id="buscador" placeholder="Buscar productos...">
 
-  <!-- Ordenar dropdown -->
-  <div id="sortText" class="sort-text">
-    Ordenar ▼
-    <div id="sortOptions" class="sort-options">
-      <div id="sortLow">Menor precio</div>
-      <div id="sortHigh">Mayor precio</div>
+      <!-- Ordenar dropdown -->
+      <div id="sortText" class="sort-text">
+        Ordenar ▼
+        <div id="sortOptions" class="sort-options">
+          <div id="sortLow">Menor precio</div>
+          <div id="sortHigh">Mayor precio</div>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-<!--Panel de filtros-->
-<div id="filterPanel" class="filter-panel">
-  <button id="closeFilterBtn" class="btn btn-danger mb-3">Cerrar</button>
-  <h5>Filtro</h5>
-  <div class="form-group">
-    <label for="minPrice">Precio mínimo</label>
-    <input type="number" id="minPrice" class="form-control" placeholder="Ej: 100">
-  </div>
-  <div class="form-group">
-    <label for="maxPrice">Precio máximo</label>
-    <input type="number" id="maxPrice" class="form-control" placeholder="Ej: 1000">
-  </div>
-  <button id="applyFilterBtn" class="btn btn-success mt-2">Aplicar</button>
-  <button id="clearFilterBtn" class="btn btn-secondary mt-2">Limpiar</button>
-</div>
+    <!--Panel de filtros-->
+    <div id="filterPanel" class="filter-panel">
+      <button id="closeFilterBtn" class="btn btn-danger mb-3">Cerrar</button>
+      <h5>Filtro</h5>
+      <div class="form-group">
+        <label for="minPrice">Precio mínimo</label>
+        <input type="number" id="minPrice" class="form-control" placeholder="Ej: 100">
+      </div>
+      <div class="form-group">
+        <label for="maxPrice">Precio máximo</label>
+        <input type="number" id="maxPrice" class="form-control" placeholder="Ej: 1000">
+      </div>
+      <button id="applyFilterBtn" class="btn btn-success mt-2">Aplicar</button>
+      <button id="clearFilterBtn" class="btn btn-secondary mt-2">Limpiar</button>
+    </div>
 
     <div class="containerEspecial">
-      
+
+    </div>
+    <div id="filterPanelPerfil" class="filter-panel-perfil">
+      <button id="closeFilterBtn" class="btn btn-danger mb-3">Cerrar</button>
+      <a href="my-profile.html">Mi cuenta</a>
+      <button id="botonTema" onclick="cambiarTema()">Tema claro &#127774;</button>
     </div>
   </main>
   <footer class="text-muted">
@@ -83,7 +88,8 @@
       <p class="float-end">
         <a href="#">Volver arriba</a>
       </p>
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
+      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a>
+      </p>
     </div>
   </footer>
   <div id="spinner-wrapper">
