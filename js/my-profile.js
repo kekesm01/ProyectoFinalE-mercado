@@ -1,3 +1,18 @@
+
+const temaGuardado = localStorage.getItem("tema"); // lee el tema guardado
+const body = document.body;
+const botonTema = document.getElementById("botonTema"); // si tenés un botón con texto/icono
+
+if (temaGuardado === "oscuro") {
+  body.classList.add("oscuro");
+  if (botonTema) botonTema.innerHTML = "Tema oscuro &#127769;"; // 🌙
+} else {
+  body.classList.remove("oscuro");
+  if (botonTema) botonTema.innerHTML = "Tema claro &#127774;"; // 🌞
+}
+
+// === Código del perfil ===
+=======
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("profileForm");
   const emailInput = document.getElementById("email");
@@ -37,4 +52,6 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("profileData", JSON.stringify(data));
     alert("Perfil guardado correctamente");
   });
+
 });
+

@@ -31,7 +31,7 @@
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link idUsuario" href="my-profile.html"></a>
+            <button id="personalizacionPerfil" class="btn btn-warning mb-3"></button>
           </li>
         </ul>
       </div>
@@ -39,7 +39,7 @@
   </nav>
   <main class="pb-5">
    <div class="img-banner">
-      <img src="img/login.png" alt="E-mercado">
+      <img src="img/login.png" alt="E-mercado" style="border-radius: 25px;">
     </div>
     <div class="container" style="margin-top: 10px;">
       <div class="row">
@@ -75,6 +75,11 @@
         <div class="list-group" id="cat-list-container">
         </div>
       </div>
+    </div>
+    <div id="filterPanelPerfil" class="filter-panel-perfil">
+      <button id="closeFilterBtn" class="btn btn-danger mb-3">Cerrar</button>
+      <a href="my-profile.html">Mi cuenta</a>
+      <button id="botonTema" onclick="cambiarTema()">Tema claro &#127774;</button>
     </div>
   </main>
   <footer class="text-muted">

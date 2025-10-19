@@ -6,6 +6,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const productId = localStorage.getItem("productID");
 
+  const temaGuardado = localStorage.getItem("tema"); // lee el tema guardado
+  const body = document.body;
+  const botonTema = document.getElementById("botonTema"); // si tenés un botón con texto/icono
+
+  if (temaGuardado === "oscuro") {
+    body.classList.add("oscuro");
+    if (botonTema) botonTema.innerHTML = "Tema oscuro &#127769;"; // 🌙
+  } else {
+    body.classList.remove("oscuro");
+    if (botonTema) botonTema.innerHTML = "Tema claro &#127774;"; // 🌞
+  }
+
+
   if (!productId) {
     container.innerHTML = `<div class="alert alert-danger">No se encontró el producto seleccionado.</div>`;
     return;
@@ -28,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   `).join('')}
                 </div>
                 <div class="flex-grow-1 d-flex align-items-center justify-content-center">
-                  <img id="img-grande" src="${product.images[0]}" class="img-fluid mb-3" alt="${product.name}" style="max-height:350px;max-width:100%;">
+                  <img id="img-grande" src="${product.images[0]}" class="img-fluid mb-3" alt="${product.name}" style="max-height:350px;max-width:100%;border-radius: 15px;">
                 </div>
               </div>
               <div class="col-md-6">
@@ -161,6 +174,64 @@ document.addEventListener("DOMContentLoaded", () => {
 
         contenedor.innerHTML = html;
       }
+
+      // Busca el botón y los campos del formulario de calificación
+      function agregarManejadorCalificacion() {
+        const btn = document.querySelector('.calificación-productos button');
+        const textarea = document.querySelector('.calificación-productos textarea');
+        const ratingInputs = document.querySelectorAll('.calificación-productos input[name="rating"]');
+        const listaComentarios = document.getElementById("lista-comentarios");
+
+        if (btn && textarea && ratingInputs.length && listaComentarios) {
+          btn.addEventListener('click', function () {
+            // Obtener el puntaje seleccionado
+            let puntaje = 0;
+            ratingInputs.forEach(input => {
+              if (input.checked) puntaje = parseInt(input.value);
+            });
+
+            const texto = textarea.value.trim();
+            if (!texto || puntaje === 0) {
+              alert("Debes escribir un comentario y seleccionar una calificación.");
+              return;
+            }
+
+            // Simular usuario y fecha
+            const usuario = localStorage.getItem("usuario") || "Usuario";
+            const fecha = new Date().toLocaleString();
+
+            // Generar estrellas
+            let estrellas = "";
+            for (let i = 1; i <= 5; i++) {
+              estrellas += i <= puntaje ? "★" : "☆";
+            }
+
+            // Crear el HTML del nuevo comentario
+            const nuevoComentario = document.createElement("div");
+            nuevoComentario.className = "comentario card mb-3 shadow-sm";
+            nuevoComentario.innerHTML = `
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h6 class="mb-0"><strong>${usuario}</strong></h6>
+                  <small class="text-muted">${fecha}</small>
+                </div>
+                <p class="mt-1 mb-1"><span class="text-warning">${estrellas}</span></p>
+                <p class="mb-0">${texto}</p>
+              </div>
+            `;
+
+            // Agregar el comentario al final de la lista
+            listaComentarios.appendChild(nuevoComentario);
+
+            // Limpiar campos
+            textarea.value = "";
+            ratingInputs.forEach(input => input.checked = false);
+          });
+        }
+      }
+
+      // Llama a la función después de renderizar el producto
+      agregarManejadorCalificacion();
 
     })
     .catch(error => {

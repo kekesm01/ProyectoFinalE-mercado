@@ -30,19 +30,19 @@
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link idUsuario" href="my-profile.html"></a>
+            <button id="personalizacionPerfil" class="btn btn-warning mb-3"></button>
           </li>
         </ul>
       </div>
     </div>
-  </nav> 
+  </nav>
   <main>
     <div class="jumbotron text-center"></div>
     <div class="album py-5 bg-light">
       <div class="container">
-        <div class="row">
+        <div class="row" style="background-color: rgb(255, 254, 254);color: rgb(17, 17, 17);">
           <div class="col-md-4">
-            <div class="card mb-4 shadow-sm custom-card cursor-active" id="autos">
+            <div class="card mb-4 shadow-sm cursor-active" id="autos">
               <img class="bd-placeholder-img card-img-top" src="img/cars_index.jpg"
                 alt="Imgagen representativa de la categoría 'Autos'">
               <h3 class="m-3">Autos</h3>
@@ -77,13 +77,19 @@
         </div>
       </div>
     </div>
+    <div id="filterPanelPerfil" class="filter-panel-perfil">
+      <button id="closeFilterBtn" class="btn btn-danger mb-3">Cerrar</button>
+      <a href="my-profile.html">Mi cuenta</a>
+      <button id="botonTema" onclick="cambiarTema()">Tema claro &#127774;</button>
+    </div>
   </main>
   <footer class="text-muted">
     <div class="container">
       <p class="float-end">
         <a href="#">Volver arriba</a>
       </p>
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
+      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a>
+      </p>
     </div>
   </footer>
   <script src="js/bootstrap.bundle.min.js"></script>
