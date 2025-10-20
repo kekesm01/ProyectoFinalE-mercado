@@ -29,15 +29,22 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("firstName").value = profile.firstName || "";
     document.getElementById("lastName").value = profile.lastName || "";
     document.getElementById("phone").value = profile.phone || "";
+  const imagenGuardada = localStorage.getItem("imagenPerfil");
+if (imagenGuardada) {
+  preview.src = imagenGuardada;
+}
   }
 
-  // Mostrar imagen (no se guarda)
+  // Mostrar imagen 
   fileInput.addEventListener("change", (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (event) => preview.src = event.target.result;
-      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        preview.src = event.target.result;
+            localStorage.setItem("imagenPerfil", event.target.result);
+      };
+            reader.readAsDataURL(file);
     }
   });
 
