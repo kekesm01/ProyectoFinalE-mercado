@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <p>${product.description}</p>
               </div>
             </div>
-            <button onclick="comprar()" id="btnComprar" class="btn btn-warning mb-3">Comprar</button>
+            <button id="btnComprar" class="btn btn-warning mb-3">Comprar</button>
             <div class="calificación-productos">
               <h5>Califica este producto</h5>
               <div class="rating">
@@ -234,6 +234,48 @@ document.addEventListener("DOMContentLoaded", () => {
       // Llama a la función después de renderizar el producto
       agregarManejadorCalificacion();
 
+      // Manejar compra: guardar en localStorage en formato normalizado y redirigir a carrito
+      const btnComprar = container.querySelector('#btnComprar');
+      if (btnComprar) {
+        btnComprar.addEventListener('click', () => {
+          // Recuperar carrito actual (array) o crear uno nuevo
+          const cartKey = 'cartItems';
+          let cart = [];
+          try {
+            cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+          } catch (e) {
+            cart = [];
+          }
+
+          // Crear item normalizado
+          const item = {
+            id: productId || product.id || String(Date.now()),
+            name: product.name,
+            price: Number(product.cost),
+            currency: product.currency,
+            qty: 1,
+            image: product.images && product.images.length ? product.images[0] : ''
+          };
+
+          // Si ya existe el producto en el carrito, incrementar cantidad
+          const existingIndex = cart.findIndex(it => it.id == item.id);
+          if (existingIndex > -1) {
+            cart[existingIndex].qty = Number(cart[existingIndex].qty) + 1;
+          } else {
+            cart.push(item);
+          }
+
+          // Guardar y redirigir
+          try {
+            localStorage.setItem(cartKey, JSON.stringify(cart));
+            console.log('product-info: guardado en cartItems', cart);
+          } catch (e) {
+            console.error('product-info: error guardando cartItems', e);
+          }
+          window.location.href = 'cart.html';
+        });
+      }
+
     })
     .catch(error => {
       container.innerHTML = `<div class="alert alert-danger">No se pudo cargar la información del producto.</div>`;
@@ -241,5 +283,18 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function comprar(){
+  // Si existe un objeto preparado en memoria, guárdalo y redirige.
+  if (window.currentCartProduct) {
+    try {
+      localStorage.setItem('cartProduct', JSON.stringify(window.currentCartProduct));
+      console.log('comprar(): guardado cartProduct desde window.currentCartProduct', window.currentCartProduct);
+    } catch (e) {
+      console.error('comprar(): error al guardar en localStorage', e);
+    }
+  }
+  // Ir al carrito en cualquier caso
   window.location.href = "cart.html";
 }
+
+// Nota: la acción de comprar se maneja dentro del alcance donde se carga el producto
+// (se dejó la función global ya que antes existía, pero la lógica principal se adjunta al botón)

@@ -2,48 +2,124 @@ document.addEventListener("DOMContentLoaded", () => {
   const cartContainer = document.getElementById("cart-container");
   const emptyCart = document.getElementById("empty-cart");
 
-  // Cargar producto del localStorage
-  const productJSON = localStorage.getItem("cartProduct");
-  if (!productJSON) {
+  const cartKey = 'cartItems';
+  let cart = [];
+  try {
+    cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+  } catch (e) {
+    cart = [];
+  }
+  console.log('cart.js: cartItems loaded =', cart);
+
+  if (!cart || cart.length === 0) {
     emptyCart.style.display = "block";
     return;
   }
 
-  const product = JSON.parse(productJSON);
+  const fmt = (n) => {
+    try { return Number(n).toLocaleString(navigator.language || 'es-ES'); } catch (e) { return n; }
+  };
 
-  // Mostrar producto
-  cartContainer.innerHTML = `
-    <div class="card mb-3 shadow-sm">
-      <div class="row g-0 align-items-center">
-        <div class="col-md-3 text-center">
-          <img src="${product.image}" class="img-fluid p-2" alt="${product.name}">
-        </div>
-        <div class="col-md-9">
-          <div class="card-body">
-            <h5 class="card-title">${product.name}</h5>
-            <p class="card-text">Precio: ${product.currency} ${product.price}</p>
-            <div class="mb-2">
-              <label for="qty">Cantidad:</label>
-              <input type="number" id="qty" min="1" value="${product.qty}" style="width:80px;">
+  function saveCart() {
+    localStorage.setItem(cartKey, JSON.stringify(cart));
+  }
+
+  function render() {
+    emptyCart.style.display = 'none';
+    let html = '';
+
+    // Items
+    cart.forEach((product, index) => {
+      const subtotal = Number(product.price) * Number(product.qty);
+      html += `
+        <div class="card mb-3 shadow-sm cart-card" data-index="${index}">
+          <div class="row g-0 align-items-center">
+            <div class="col-md-3 text-center p-3">
+              <img src="${product.image}" class="img-fluid rounded" alt="${product.name}" style="max-height:140px;object-fit:cover;">
             </div>
-            <p class="card-text">Subtotal: <span id="subtotal">${product.currency} ${product.price * product.qty}</span></p>
+            <div class="col-md-6">
+              <div class="card-body">
+                <h5 class="card-title mb-1">${product.name}</h5>
+                <p class="text-muted mb-1 small">Precio unitario: <strong>${product.currency} ${fmt(product.price)}</strong></p>
+                <div class="d-flex align-items-center mt-2">
+                  <label class="me-2 mb-0">Cantidad:</label>
+                  <input type="number" class="form-control form-control-sm qty-input" min="1" value="${product.qty}" style="width:100px;">
+                  <button class="btn btn-outline-danger btn-sm ms-3 remove-btn">Eliminar</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 text-center">
+              <div class="p-3">
+                <p class="mb-1 small text-muted">Subtotal</p>
+                <h5 class="text-primary subtotal">${product.currency} ${fmt(subtotal)}</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    // Summary
+    const total = cart.reduce((acc, it) => acc + Number(it.price) * Number(it.qty), 0);
+    html += `
+      <div class="card p-3 shadow-sm cart-summary">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <small class="text-muted">Total</small>
+            <div class="h4 mt-1">${cart[0].currency} <span id="total">${fmt(total)}</span></div>
+          </div>
+          <div>
+            <button id="checkoutBtn" class="btn btn-success">Procesar compra</button>
           </div>
         </div>
       </div>
-    </div>
-  `;
+    `;
 
-  // Actualizar subtotal en tiempo real
-  const qtyInput = document.getElementById("qty");
-  const subtotalEl = document.getElementById("subtotal");
+    cartContainer.innerHTML = html;
 
-  qtyInput.addEventListener("input", () => {
-    let qty = parseInt(qtyInput.value);
-    if (isNaN(qty) || qty < 1) qty = 1;
-    subtotalEl.textContent = `${product.currency} ${product.price * qty}`;
+    // Listeners: qty change and remove
+    const qtyInputs = cartContainer.querySelectorAll('.qty-input');
+    qtyInputs.forEach((input, i) => {
+      input.addEventListener('input', () => {
+        let v = parseInt(input.value);
+        if (isNaN(v) || v < 1) v = 1;
+        cart[i].qty = v;
+        const newSubtotal = Number(cart[i].price) * v;
+        const subtotalEl = cartContainer.querySelectorAll('.subtotal')[i];
+        subtotalEl.textContent = `${cart[i].currency} ${fmt(newSubtotal)}`;
+        const totalEl = document.getElementById('total');
+        const totalNow = cart.reduce((acc, it) => acc + Number(it.price) * Number(it.qty), 0);
+        totalEl.textContent = fmt(totalNow);
+        saveCart();
+      });
+    });
 
-    // Guardar la nueva cantidad en localStorage
-    product.qty = qty;
-    localStorage.setItem("cartProduct", JSON.stringify(product));
-  });
+    const removeBtns = cartContainer.querySelectorAll('.remove-btn');
+    removeBtns.forEach((btn, i) => {
+      btn.addEventListener('click', () => {
+        cart.splice(i, 1);
+        saveCart();
+        if (cart.length === 0) {
+          cartContainer.innerHTML = '';
+          emptyCart.style.display = 'block';
+        } else {
+          render();
+        }
+      });
+    });
+
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    if (checkoutBtn) {
+      checkoutBtn.addEventListener('click', () => {
+        alert('Proceso de compra (prototipo): gracias por su compra.');
+        localStorage.removeItem(cartKey);
+        cart = [];
+        cartContainer.innerHTML = '';
+        emptyCart.style.display = 'block';
+      });
+    }
+  }
+
+  // Inicial render
+  render();
 });

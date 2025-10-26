@@ -594,3 +594,33 @@ body.oscuro .m-3 {
 #btnComprar:hover{
   background-color: darkorange;
 }
+
+/* Estilos para carrito de compras (prototipo elegante) */
+.cart-card {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.cart-card .card-body h5 {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.cart-summary {
+  margin-top: 1rem;
+  border-radius: 12px;
+}
+
+.cart-card img {
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+@media (max-width: 767px) {
+  .cart-card .row > div {
+    text-align: center;
+  }
+  .cart-summary {
+    text-align: center;
+  }
+}
