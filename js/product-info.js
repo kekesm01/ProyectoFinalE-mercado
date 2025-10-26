@@ -59,6 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <p>${product.description}</p>
               </div>
             </div>
+            <button onclick="comprar()" id="btnComprar" class="btn btn-warning mb-3">Comprar</button>
             <div class="calificación-productos">
               <h5>Califica este producto</h5>
               <div class="rating">
@@ -238,3 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
       container.innerHTML = `<div class="alert alert-danger">No se pudo cargar la información del producto.</div>`;
     });
 });
+
+function comprar(){
+  window.location.href = "cart.html";
+}
