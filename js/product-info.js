@@ -282,19 +282,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-function comprar(){
-  // Si existe un objeto preparado en memoria, guárdalo y redirige.
-  if (window.currentCartProduct) {
-    try {
-      localStorage.setItem('cartProduct', JSON.stringify(window.currentCartProduct));
-      console.log('comprar(): guardado cartProduct desde window.currentCartProduct', window.currentCartProduct);
-    } catch (e) {
-      console.error('comprar(): error al guardar en localStorage', e);
-    }
-  }
-  // Ir al carrito en cualquier caso
-  window.location.href = "cart.html";
-}
 
 // Nota: la acción de comprar se maneja dentro del alcance donde se carga el producto
 // (se dejó la función global ya que antes existía, pero la lógica principal se adjunta al botón)
