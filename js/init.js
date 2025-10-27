@@ -39,3 +39,16 @@ let getJSONData = function(url){
         return result;
     });
 }
+function actualizarBadge() {
+  const btnCarrito = document.getElementById('btnCarrito');
+  if (!btnCarrito) return;
+
+  const cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+  const totalItems = cart.reduce((acc, item) => acc + Number(item.qty), 0);
+
+  const badge = btnCarrito.querySelector('span.badge');
+  if (badge) badge.textContent = totalItems;
+}
+
+// Actualiza al cargar la página
+document.addEventListener("DOMContentLoaded", actualizarBadge);
