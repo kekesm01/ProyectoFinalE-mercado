@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const cartContainer = document.getElementById("cart-container");
   const emptyCart = document.getElementById("empty-cart");
-
   const cartKey = 'cartItems';
   let cart = [];
   try {
@@ -13,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!cart || cart.length === 0) {
     emptyCart.style.display = "block";
+    actualizarBadge(); // 👈 agregado para actualizar cuando está vacío
     return;
   }
 
@@ -22,6 +22,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function saveCart() {
     localStorage.setItem(cartKey, JSON.stringify(cart));
+    actualizarBadge(); // 👈 agregado para actualizar badge al guardar
+  }
+
+  // 👇 Función nueva: actualiza el badge del carrito (cantidad total)
+  function actualizarBadge() {
+    const btnCarrito = document.getElementById('btnCarrito');
+    if (!btnCarrito) return;
+
+    const totalItems = cart.reduce((acc, item) => acc + Number(item.qty), 0);
+    const badge = btnCarrito.querySelector('span.badge');
+    if (badge) badge.textContent = totalItems;
   }
 
   function render() {
@@ -77,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     cartContainer.innerHTML = html;
 
-    // Listeners: qty change and remove
+    // Listeners: qty change
     const qtyInputs = cartContainer.querySelectorAll('.qty-input');
     qtyInputs.forEach((input, i) => {
       input.addEventListener('input', () => {
@@ -90,10 +101,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const totalEl = document.getElementById('total');
         const totalNow = cart.reduce((acc, it) => acc + Number(it.price) * Number(it.qty), 0);
         totalEl.textContent = fmt(totalNow);
-        saveCart();
+        saveCart(); // guarda y actualiza badge
       });
     });
 
+    // Listener: eliminar producto
     const removeBtns = cartContainer.querySelectorAll('.remove-btn');
     removeBtns.forEach((btn, i) => {
       btn.addEventListener('click', () => {
@@ -105,6 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
           render();
         }
+        actualizarBadge(); // 👈 agregado para actualizar al eliminar
       });
     });
 
@@ -116,8 +129,11 @@ document.addEventListener("DOMContentLoaded", () => {
         cart = [];
         cartContainer.innerHTML = '';
         emptyCart.style.display = 'block';
+        actualizarBadge(); // 👈 agregado para vaciar el badge
       });
     }
+
+    actualizarBadge(); // 👈 asegura sincronización inicial
   }
 
   // Inicial render
