@@ -84,7 +84,7 @@ document.getElementById("summary-total").textContent = fmt(total);
     // Listeners: qty change
     const qtyInputs = cartContainer.querySelectorAll('.qty-input');
     qtyInputs.forEach((input, i) => {
-      input.addEventListener('input', () => {
+      input.addEventListener('change', () => {
         let v = parseInt(input.value);
         if (isNaN(v) || v < 1) v = 1;
         cart[i].qty = v;

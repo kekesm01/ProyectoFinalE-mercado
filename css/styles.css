@@ -625,60 +625,53 @@ body.oscuro .m-3 {
   }
 }
 
-/* ==== LAYOUT PRINCIPAL DEL CARRITO ==== */
+/* Layout del carrito */
 .cart-page {
   display: flex;
   gap: 20px;
+  align-items: flex-start;
 }
 
-/* COLUMNA IZQUIERDA (70%) */
+/* Columna izquierda 70% */
 .cart-left {
   width: 70%;
 }
 
-/* COLUMNA DERECHA (30%) */
+/* Columna derecha 30% */
 .cart-right {
   width: 30%;
-  position: sticky;
-  top: 120px; /* distancia desde arriba */
-  height: max-content;
 }
 
-/* ---- Vista móvil: todo en columna ---- */
+/* Para que el resumen acompañe el scroll */
+.sticky-card {
+  position: sticky;
+  top: 20px;
+}
+
+/* ---- Vista móvil ---- */
 @media (max-width: 900px) {
   .cart-page {
     flex-direction: column;
   }
-  .cart-left, .cart-right {
+
+  .cart-left,
+  .cart-right {
     width: 100%;
     position: static;
   }
 }
 
-/* ==== TARJETAS DEL ESTILO FIGMA ==== */
+/* ==== TARJETAS ==== */
 .card {
   border-radius: 20px !important;
   border: 1px solid #ddd;
 }
 
-.card h5 {
-  font-weight: 700;
+.cart-card img {
+  border-radius: 10px;
 }
 
-/* Radio buttons estilo Figma */
-.form-check {
-  background:#f4f4f4;
-  padding:12px;
-  border-radius:12px;
-  margin-bottom:8px;
-}
-
-.form-check-input {
-  transform: scale(1.3);
-  margin-right: 10px;
-}
-
-/* Resumen de costos */
+/* ==== RESUMEN DE COMPRA ==== */
 .sticky-card .card {
   border-radius: 20px !important;
   background: white;
@@ -687,22 +680,24 @@ body.oscuro .m-3 {
 #summary-content p {
   display: flex;
   justify-content: space-between;
-  font-size: 1rem;
+  margin: 6px 0;
 }
 
-.h5 strong {
-  font-size: 1.2rem;
+#summary-total {
+  font-size: 1.4rem;
+  font-weight: bold;
 }
 
-/* Botón */
-#checkoutBtnFinal {
-  background: #4d9dff;
-  border-radius: 12px;
+/* ==== BOTÓN DE PROCESAR COMPRA (AZUL) ==== */
+#checkoutBtn {
+  background: #4d9dff !important;
+  border: none !important;
+  color: white !important;
   padding: 12px;
+  border-radius: 12px;
   font-size: 1.1rem;
-  border: none;
 }
 
-#checkoutBtnFinal:hover {
-  background: #1e78ee;
+#checkoutBtn:hover {
+  background: #1e78ee !important;
 }
