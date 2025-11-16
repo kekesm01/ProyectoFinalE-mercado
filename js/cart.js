@@ -70,23 +70,16 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
     });
 
-    // Summary
-    const total = cart.reduce((acc, it) => acc + Number(it.price) * Number(it.qty), 0);
-    html += `
-      <div class="card p-3 shadow-sm cart-summary">
-        <div class="d-flex justify-content-between align-items-center">
-          <div>
-            <small class="text-muted">Total</small>
-            <div class="h4 mt-1">${cart[0].currency} <span id="total">${fmt(total)}</span></div>
-          </div>
-          <div>
-            <button id="checkoutBtn" class="btn btn-success">Procesar compra</button>
-          </div>
-        </div>
-      </div>
-    `;
+ // Summary (vacío)
+cartContainer.innerHTML = html;
 
-    cartContainer.innerHTML = html;
+// 👉 Después de renderizar los productos, actualizo el resumen real
+const total = cart.reduce((acc, it) => acc + Number(it.price) * Number(it.qty), 0);
+
+document.getElementById("summary-subtotal").textContent = fmt(total);
+document.getElementById("summary-envio").textContent = 0;
+document.getElementById("summary-total").textContent = fmt(total);
+  
 
     // Listeners: qty change
     const qtyInputs = cartContainer.querySelectorAll('.qty-input');
@@ -98,9 +91,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const newSubtotal = Number(cart[i].price) * v;
         const subtotalEl = cartContainer.querySelectorAll('.subtotal')[i];
         subtotalEl.textContent = `${cart[i].currency} ${fmt(newSubtotal)}`;
-        const totalEl = document.getElementById('total');
         const totalNow = cart.reduce((acc, it) => acc + Number(it.price) * Number(it.qty), 0);
-        totalEl.textContent = fmt(totalNow);
+    document.getElementById("summary-subtotal").textContent = fmt(totalNow);
+    document.getElementById("summary-total").textContent = fmt(totalNow);
+
         saveCart(); // guarda y actualiza badge
       });
     });

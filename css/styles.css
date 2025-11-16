@@ -624,3 +624,85 @@ body.oscuro .m-3 {
     text-align: center;
   }
 }
+
+/* ==== LAYOUT PRINCIPAL DEL CARRITO ==== */
+.cart-page {
+  display: flex;
+  gap: 20px;
+}
+
+/* COLUMNA IZQUIERDA (70%) */
+.cart-left {
+  width: 70%;
+}
+
+/* COLUMNA DERECHA (30%) */
+.cart-right {
+  width: 30%;
+  position: sticky;
+  top: 120px; /* distancia desde arriba */
+  height: max-content;
+}
+
+/* ---- Vista móvil: todo en columna ---- */
+@media (max-width: 900px) {
+  .cart-page {
+    flex-direction: column;
+  }
+  .cart-left, .cart-right {
+    width: 100%;
+    position: static;
+  }
+}
+
+/* ==== TARJETAS DEL ESTILO FIGMA ==== */
+.card {
+  border-radius: 20px !important;
+  border: 1px solid #ddd;
+}
+
+.card h5 {
+  font-weight: 700;
+}
+
+/* Radio buttons estilo Figma */
+.form-check {
+  background:#f4f4f4;
+  padding:12px;
+  border-radius:12px;
+  margin-bottom:8px;
+}
+
+.form-check-input {
+  transform: scale(1.3);
+  margin-right: 10px;
+}
+
+/* Resumen de costos */
+.sticky-card .card {
+  border-radius: 20px !important;
+  background: white;
+}
+
+#summary-content p {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+}
+
+.h5 strong {
+  font-size: 1.2rem;
+}
+
+/* Botón */
+#checkoutBtnFinal {
+  background: #4d9dff;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 1.1rem;
+  border: none;
+}
+
+#checkoutBtnFinal:hover {
+  background: #1e78ee;
+}
