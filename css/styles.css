@@ -624,3 +624,80 @@ body.oscuro .m-3 {
     text-align: center;
   }
 }
+
+/* Layout del carrito */
+.cart-page {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* Columna izquierda 70% */
+.cart-left {
+  width: 70%;
+}
+
+/* Columna derecha 30% */
+.cart-right {
+  width: 30%;
+}
+
+/* Para que el resumen acompañe el scroll */
+.sticky-card {
+  position: sticky;
+  top: 20px;
+}
+
+/* ---- Vista móvil ---- */
+@media (max-width: 900px) {
+  .cart-page {
+    flex-direction: column;
+  }
+
+  .cart-left,
+  .cart-right {
+    width: 100%;
+    position: static;
+  }
+}
+
+/* ==== TARJETAS ==== */
+.card {
+  border-radius: 20px !important;
+  border: 1px solid #ddd;
+}
+
+.cart-card img {
+  border-radius: 10px;
+}
+
+/* ==== RESUMEN DE COMPRA ==== */
+.sticky-card .card {
+  border-radius: 20px !important;
+  background: white;
+}
+
+#summary-content p {
+  display: flex;
+  justify-content: space-between;
+  margin: 6px 0;
+}
+
+#summary-total {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+/* ==== BOTÓN DE PROCESAR COMPRA (AZUL) ==== */
+#checkoutBtn {
+  background: #4d9dff !important;
+  border: none !important;
+  color: white !important;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 1.1rem;
+}
+
+#checkoutBtn:hover {
+  background: #1e78ee !important;
+}

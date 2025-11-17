@@ -45,14 +45,126 @@
       </div>
     </div>
   </nav>
+
   <main>
     <div class="container">
   <h2 class="my-4">Tu carrito</h2>
+  <div class="cart-page">
+
+        <!-- COLUMNA IZQUIERDA (70%) -->
+        <div class="cart-left">
   <div id="cart-container"></div>
   <div id="empty-cart" class="alert alert-info text-center" style="display:none;">
     Tu carrito está vacío.
   </div>
-</div>
+
+  <!-- Tipos de envío -->
+<div class="card shadow-sm p-4 mb-3">
+          <h5 class="mb-3">Tipo de envío</h5>
+          <form id="shippingForm">
+
+    <div class="form-check mb-3">
+              <input class="form-check-input" type="radio" name="envio" id="envioPremium">
+              <label class="form-check-label" for="envioPremium">Envío premium de 2 a 5 días</label>
+              <p class="text-muted small ms-4">15% del subtotal</p>
+            </div>
+
+    <!-- Envío Express -->
+<div class="form-check mb-3">
+              <input class="form-check-input" type="radio" name="envio" id="envioExpress">
+              <label class="form-check-label" for="envioExpress">Envío express de 5 a 8 días</label>
+              <p class="text-muted small ms-4">7% del subtotal</p>
+            </div>
+
+    <!-- Envío Estándar -->
+<div class="form-check">
+              <input class="form-check-input" type="radio" name="envio" id="envioStandard" checked>
+              <label class="form-check-label" for="envioStandard">Envío estándar de 12 a 15 días</label>
+              <p class="text-muted small ms-4">5% del subtotal</p>
+            </div>
+
+          </form>
+        </div>
+
+<!-- Dirección -->
+<div class="card shadow-sm p-4 mb-3">
+          <h5 class="mb-3">Dirección de envío</h5>
+          <form>
+            <div class="row g-3">
+
+              <div class="col-md-6">
+                <label class="form-label">Nombre y Apellido</label>
+                <input type="text" class="form-control" placeholder="Juan Pérez">
+              </div>
+
+              <div class="col-md-12">
+                <label class="form-label">Departamento</label>
+                <input type="text" class="form-control" placeholder="Ej: Montevideo">
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Localidad</label>
+                <input type="text" class="form-control" placeholder="Ej: Pocitos">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Calle</label>
+                <input type="text" class="form-control" placeholder="Av. Principal 1234">
+              </div>
+
+<div class="col-md-6">
+                <label class="form-label">Esquina</label>
+                <input type="text" class="form-control" placeholder="Ej: Paraguay">
+              </div>
+
+            </div>
+          </form>
+        </div>
+
+<!-- Formas de pago -->
+  <div class="card shadow-sm p-4 mb-3">
+          <h5 class="mb-3">Formas de pago</h5>
+
+          <form>
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="pago" id="tarjeta" checked>
+              <label class="form-check-label" for="tarjeta">Tarjeta de crédito</label>
+            </div>
+
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="radio" name="pago" id="transferencia">
+              <label class="form-check-label" for="transferencia">Transferencia bancaria</label>
+            </div>
+          </form>
+        </div>
+
+      </div>
+
+<!-- Columna Resumen de Compra -->
+        <div class="cart-right">
+
+        <div class="cart-summary sticky-card">
+          <div class="card p-4 shadow-sm">
+            <h5 class="mb-3">Resumen de compra</h5>
+
+            <div id="summary-content">
+              <p><strong>Subtotal:</strong> <span id="summary-subtotal">0</span></p>
+              <p><strong>Costos de Envío:</strong> <span id="summary-envio">0</span></p>
+              <hr>
+              <p class="h5"><strong>Total:</strong> <span id="summary-total">0</span></p>
+            </div>
+
+            <button id="checkoutBtn" class="w-100 mt-3">
+              Procesar compra
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+</div> 
+  </div> 
+
     <div id="filterPanelPerfil" class="filter-panel-perfil">
       <button id="closeFilterBtn" class="btn btn-danger mb-3">Cerrar</button>
       <a href="my-profile.html">Mi cuenta</a>
