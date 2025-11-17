@@ -10,10 +10,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   console.log('cart.js: cartItems loaded =', cart);
 
-  if (!cart || cart.length === 0) {
+  if (!cart) cart = [];
+  // mostrar vacío inicialmente si corresponde (no retornamos para mantener listeners activos)
+  if (cart.length === 0) {
     emptyCart.style.display = "block";
     actualizarBadge(); // 👈 agregado para actualizar cuando está vacío
-    return;
   }
 
   const fmt = (n) => {
@@ -23,6 +24,39 @@ document.addEventListener("DOMContentLoaded", () => {
   function saveCart() {
     localStorage.setItem(cartKey, JSON.stringify(cart));
     actualizarBadge(); // 👈 agregado para actualizar badge al guardar
+  }
+
+  // Calcula y actualiza el resumen de costos (subtotal, envío, total)
+  function updateSummary() {
+    const summarySubtotal = document.getElementById('summary-subtotal');
+    const summaryEnvio = document.getElementById('summary-envio');
+    const summaryTotal = document.getElementById('summary-total');
+    const leftTotal = document.getElementById('total'); // total mostrado en la tarjeta izquierda
+
+    const subtotal = cart.reduce((acc, it) => acc + Number(it.price) * Number(it.qty), 0);
+
+    // Determinar porcentaje según radio seleccionado
+    let rate = 0.05;
+    const envioPremium = document.getElementById('envioPremium');
+    const envioExpress = document.getElementById('envioExpress');
+    const envioStandard = document.getElementById('envioStandard');
+    if (envioPremium && envioPremium.checked) rate = 0.15;
+    else if (envioExpress && envioExpress.checked) rate = 0.07;
+    else if (envioStandard && envioStandard.checked) rate = 0.05;
+
+    const envioCost = subtotal > 0 ? subtotal * rate : 0;
+    const total = subtotal + envioCost;
+
+    if (summarySubtotal) summarySubtotal.textContent = fmt(subtotal);
+    if (summaryEnvio) summaryEnvio.textContent = fmt(envioCost);
+    if (summaryTotal) summaryTotal.textContent = fmt(total);
+    if (leftTotal) leftTotal.textContent = fmt(total);
+
+    // Habilitar/deshabilitar botones de checkout
+    const checkoutBtns = document.querySelectorAll('#checkoutBtn');
+    checkoutBtns.forEach(b => {
+      if (cart.length === 0) b.setAttribute('disabled', 'disabled'); else b.removeAttribute('disabled');
+    });
   }
 
   // 👇 Función nueva: actualiza el badge del carrito (cantidad total)
@@ -36,6 +70,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function render() {
+    // Si el carrito está vacío, mostrar mensaje y actualizar resumen
+    if (cart.length === 0) {
+      cartContainer.innerHTML = '';
+      emptyCart.style.display = 'block';
+      updateSummary();
+      return;
+    }
     emptyCart.style.display = 'none';
     let html = '';
 
@@ -70,16 +111,12 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
     });
 
- // Summary (vacío)
-cartContainer.innerHTML = html;
 
-// 👉 Después de renderizar los productos, actualizo el resumen real
-const total = cart.reduce((acc, it) => acc + Number(it.price) * Number(it.qty), 0);
+  // Summary (vacío)
+  cartContainer.innerHTML = html;
 
-document.getElementById("summary-subtotal").textContent = fmt(total);
-document.getElementById("summary-envio").textContent = 0;
-document.getElementById("summary-total").textContent = fmt(total);
-  
+  // Actualizar resumen y total izquierdo
+  updateSummary();
 
     // Listeners: qty change
     const qtyInputs = cartContainer.querySelectorAll('.qty-input');
@@ -96,6 +133,7 @@ document.getElementById("summary-total").textContent = fmt(total);
     document.getElementById("summary-total").textContent = fmt(totalNow);
 
         saveCart(); // guarda y actualiza badge
+        updateSummary();
       });
     });
 
@@ -112,24 +150,33 @@ document.getElementById("summary-total").textContent = fmt(total);
           render();
         }
         actualizarBadge(); // 👈 agregado para actualizar al eliminar
+        updateSummary();
       });
     });
 
-    const checkoutBtn = document.getElementById('checkoutBtn');
-    if (checkoutBtn) {
-      checkoutBtn.addEventListener('click', () => {
+    // Conectar todos los botones de checkout presentes en la página
+    const checkoutBtns = document.querySelectorAll('#checkoutBtn');
+    checkoutBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (cart.length === 0) return;
         alert('Proceso de compra (prototipo): gracias por su compra.');
         localStorage.removeItem(cartKey);
         cart = [];
         cartContainer.innerHTML = '';
         emptyCart.style.display = 'block';
         actualizarBadge(); // 👈 agregado para vaciar el badge
+        updateSummary();
       });
-    }
+    });
 
     actualizarBadge(); // 👈 asegura sincronización inicial
+    updateSummary(); // actualizar resumen derecho al renderizar
   }
 
   // Inicial render
   render();
+
+  // Listener para cambios en el tipo de envío (actualiza resumen en tiempo real)
+  const shippingForm = document.getElementById('shippingForm');
+  if (shippingForm) shippingForm.addEventListener('change', updateSummary);
 });
