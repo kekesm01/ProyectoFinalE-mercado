@@ -112,11 +112,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-  // Summary (vacío)
-  cartContainer.innerHTML = html;
+    // Summary (vacío)
+    cartContainer.innerHTML = html;
 
-  // Actualizar resumen y total izquierdo
-  updateSummary();
+    // Actualizar resumen y total izquierdo
+    updateSummary();
 
     // Listeners: qty change
     const qtyInputs = cartContainer.querySelectorAll('.qty-input');
@@ -129,8 +129,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const subtotalEl = cartContainer.querySelectorAll('.subtotal')[i];
         subtotalEl.textContent = `${cart[i].currency} ${fmt(newSubtotal)}`;
         const totalNow = cart.reduce((acc, it) => acc + Number(it.price) * Number(it.qty), 0);
-    document.getElementById("summary-subtotal").textContent = fmt(totalNow);
-    document.getElementById("summary-total").textContent = fmt(totalNow);
+        document.getElementById("summary-subtotal").textContent = fmt(totalNow);
+        document.getElementById("summary-total").textContent = fmt(totalNow);
 
         saveCart(); // guarda y actualiza badge
         updateSummary();
@@ -157,67 +157,67 @@ document.addEventListener("DOMContentLoaded", () => {
     // Conectar todos los botones de checkout presentes en la página
     const checkoutBtns = document.querySelectorAll('#checkoutBtn');
     checkoutBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
+      btn.addEventListener('click', () => {
 
-    // --- Validación; carrito no vacío ---
-    if (cart.length === 0) {
-      alert("Tu carrito está vacío.");
-      return;
-    }
+        // --- Validación; carrito no vacío ---
+        if (cart.length === 0) {
+          alert("Tu carrito está vacío.");
+          return;
+        }
 
-    // --- Validación: dirección completa ---
-    const nombre = document.querySelector('input[placeholder="Juan Pérez"]');
-    const departamento = document.querySelector('input[placeholder="Ej: Montevideo"]');
-    const localidad = document.querySelector('input[placeholder="Ej: Pocitos"]');
-    const calle = document.querySelector('input[placeholder="Av. Principal 1234"]');
-    const esquina = document.querySelector('input[placeholder="Ej: Paraguay"]');
-    
-    if (
-      !nombre.value.trim() ||
-      !departamento.value.trim() ||
-      !localidad.value.trim() ||
-      !calle.value.trim() ||
-      !esquina.value.trim()
-    ) {
-      alert("Debes completar todos los campos de la dirección.");
-      return;
-    }
+        // --- Validación: dirección completa ---
+        const nombre = document.querySelector('input[placeholder="Juan Pérez"]');
+        const departamento = document.querySelector('input[placeholder="Ej: Montevideo"]');
+        const localidad = document.querySelector('input[placeholder="Ej: Pocitos"]');
+        const calle = document.querySelector('input[placeholder="Av. Principal 1234"]');
+        const esquina = document.querySelector('input[placeholder="Ej: Paraguay"]');
 
-    // --- Validación: forma de envío seleccionada ---
-    const envioSeleccionado = document.querySelector('input[name="envio"]:checked');
-    if (!envioSeleccionado) {
-      alert("Debes seleccionar un tipo de envío.");
-      return;
-    }
+        if (
+          !nombre.value.trim() ||
+          !departamento.value.trim() ||
+          !localidad.value.trim() ||
+          !calle.value.trim() ||
+          !esquina.value.trim()
+        ) {
+          alert("Debes completar todos los campos de la dirección.");
+          return;
+        }
 
-    // --- Validación: cantidades válidas (ya tenés min=1 pero igual se valida) ---
-    for (let item of cart) {
-      if (!item.qty || item.qty <= 0) {
-        alert("Las cantidades deben ser mayores a cero.");
-        return;
-      }
-    }
+        // --- Validación: forma de envío seleccionada ---
+        const envioSeleccionado = document.querySelector('input[name="envio"]:checked');
+        if (!envioSeleccionado) {
+          alert("Debes seleccionar un tipo de envío.");
+          return;
+        }
 
-    // --- Validación: forma de pago seleccionada ---
-    const pagoSeleccionado = document.querySelector('input[name="pago"]:checked');
-    if (!pagoSeleccionado) {
-      alert("Debes seleccionar una forma de pago.");
-      return;
-    }
+        // --- Validación: cantidades válidas (ya tenés min=1 pero igual se valida) ---
+        for (let item of cart) {
+          if (!item.qty || item.qty <= 0) {
+            alert("Las cantidades deben ser mayores a cero.");
+            return;
+          }
+        }
 
-    // Si más adelante agregás inputs extra para tarjeta o transferencia,
+        // --- Validación: forma de pago seleccionada ---
+        const pagoSeleccionado = document.querySelector('input[name="pago"]:checked');
+        if (!pagoSeleccionado) {
+          alert("Debes seleccionar una forma de pago.");
+          return;
+        }
 
-    // --- SI TODO ES CORRECTO -> compra exitosa ---
-    alert("Compra realizada con éxito ✔️");
+        // Si más adelante agregás inputs extra para tarjeta o transferencia,
 
-    localStorage.removeItem(cartKey);
-    cart = [];
-    cartContainer.innerHTML = '';
-    emptyCart.style.display = 'block';
-    actualizarBadge();
-    updateSummary();
-  });
-});
+        // --- SI TODO ES CORRECTO -> compra exitosa ---
+        alert("Compra realizada con éxito ✔️");
+
+        localStorage.removeItem(cartKey);
+        cart = [];
+        cartContainer.innerHTML = '';
+        emptyCart.style.display = 'block';
+        actualizarBadge();
+        updateSummary();
+      });
+    });
 
 
     actualizarBadge(); // 👈 asegura sincronización inicial
