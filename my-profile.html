@@ -45,6 +45,15 @@
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link position-relative" href="cart.html" id="btnCarrito">
+              Mi carrito
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                0
+                <span class="visually-hidden">productos en el carrito</span>
+              </span>
+            </a>
+          </li>
+          <li class="nav-item">
             <button id="personalizacionPerfil" class="btn btn-warning mb-3"></button>
           </li>
         </ul>
@@ -94,38 +103,6 @@
       <button id="closeFilterBtn" class="btn btn-danger mb-3">Cerrar</button>
       <a href="my-profile.html">Mi cuenta</a>
       <button id="botonTema" onclick="cambiarTema()">Tema claro &#127774;</button>
-
-   <div class="container mt-4">
-  <form id="profileForm">
-    <div class="mb-3">
-      <label for="firstName" class="form-label">Nombre:</label>
-      <input type="text" class="form-control" id="firstName" required>
-    </div>
-
-    <div class="mb-3">
-      <label for="lastName" class="form-label">Apellido:</label>
-      <input type="text" class="form-control" id="lastName" required>
-    </div>
-
-    <div class="mb-3">
-      <label for="phone" class="form-label">Teléfono:</label>
-      <input type="text" class="form-control" id="phone">
-    </div>
-
-    <div class="mb-3">
-      <label for="email" class="form-label">Email:</label>
-      <input type="email" class="form-control" id="email" readonly>
-    </div>
-
-    <div class="mb-3">
-      <label for="profilePic" class="form-label">Imagen de perfil:</label>
-      <input type="file" class="form-control" id="profilePic" accept="image/*">
-      <img id="preview" alt="Vista previa" width="150" class="mt-3 rounded-circle">
-    </div>
-
-    <button type="submit" class="btn btn-primary">Guardar</button>
-  </form>
-</div>
 
     </div>
   </main>
