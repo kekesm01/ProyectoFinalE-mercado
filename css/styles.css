@@ -586,6 +586,10 @@ body.oscuro .m-3 {
   padding: 1rem;
 }
 
+body.oscuro .card{
+  background-color: #3a3a3a;
+}
+
 /*-----------BOTON COMPRAR---------------------*/
 #btnComprar{
   background-color: orange;
