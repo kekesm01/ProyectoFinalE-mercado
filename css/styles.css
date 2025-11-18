@@ -590,6 +590,14 @@ body.oscuro .card{
   background-color: #3a3a3a;
 }
 
+body.oscuro input{
+  background-color: #3a3a3a;
+}
+
+body.oscuro textarea{
+  background-color: #3a3a3a;
+}
+
 /*-----------BOTON COMPRAR---------------------*/
 #btnComprar{
   background-color: orange;
