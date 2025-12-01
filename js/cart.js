@@ -10,10 +10,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   console.log('cart.js: cartItems loaded =', cart);
 
-  if (!cart || cart.length === 0) {
+  if (!cart) cart = [];
+  // mostrar vacío inicialmente si corresponde (no retornamos para mantener listeners activos)
+  if (cart.length === 0) {
     emptyCart.style.display = "block";
+ feat/cart-badge-update
     actualizarBadge(); //  agregado para actualizar cuando está vacío
     return;
+
+    actualizarBadge(); // 👈 agregado para actualizar cuando está vacío
+ main
   }
 
   const fmt = (n) => {
@@ -25,7 +31,44 @@ document.addEventListener("DOMContentLoaded", () => {
     actualizarBadge(); //  agregado para actualizar badge al guardar
   }
 
+ feat/cart-badge-update
   // actualiza el badge del carrito (cantidad total)
+
+  // Calcula y actualiza el resumen de costos (subtotal, envío, total)
+  function updateSummary() {
+    const summarySubtotal = document.getElementById('summary-subtotal');
+    const summaryEnvio = document.getElementById('summary-envio');
+    const summaryTotal = document.getElementById('summary-total');
+    const leftTotal = document.getElementById('total'); // total mostrado en la tarjeta izquierda
+
+    const subtotal = cart.reduce((acc, it) => acc + Number(it.price) * Number(it.qty), 0);
+
+    // Determinar porcentaje según radio seleccionado
+    let rate = 0.05;
+    const envioPremium = document.getElementById('envioPremium');
+    const envioExpress = document.getElementById('envioExpress');
+    const envioStandard = document.getElementById('envioStandard');
+    if (envioPremium && envioPremium.checked) rate = 0.15;
+    else if (envioExpress && envioExpress.checked) rate = 0.07;
+    else if (envioStandard && envioStandard.checked) rate = 0.05;
+
+    const envioCost = subtotal > 0 ? subtotal * rate : 0;
+    const total = subtotal + envioCost;
+
+    if (summarySubtotal) summarySubtotal.textContent = fmt(subtotal);
+    if (summaryEnvio) summaryEnvio.textContent = fmt(envioCost);
+    if (summaryTotal) summaryTotal.textContent = fmt(total);
+    if (leftTotal) leftTotal.textContent = fmt(total);
+
+    // Habilitar/deshabilitar botones de checkout
+    const checkoutBtns = document.querySelectorAll('#checkoutBtn');
+    checkoutBtns.forEach(b => {
+      if (cart.length === 0) b.setAttribute('disabled', 'disabled'); else b.removeAttribute('disabled');
+    });
+  }
+
+  // 👇 Función nueva: actualiza el badge del carrito (cantidad total)
+ main
   function actualizarBadge() {
     const btnCarrito = document.getElementById('btnCarrito');
     if (!btnCarrito) return;
@@ -36,6 +79,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function render() {
+    // Si el carrito está vacío, mostrar mensaje y actualizar resumen
+    if (cart.length === 0) {
+      cartContainer.innerHTML = '';
+      emptyCart.style.display = 'block';
+      updateSummary();
+      return;
+    }
     emptyCart.style.display = 'none';
     let html = '';
 
@@ -70,38 +120,29 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
     });
 
-    // Summary
-    const total = cart.reduce((acc, it) => acc + Number(it.price) * Number(it.qty), 0);
-    html += `
-      <div class="card p-3 shadow-sm cart-summary">
-        <div class="d-flex justify-content-between align-items-center">
-          <div>
-            <small class="text-muted">Total</small>
-            <div class="h4 mt-1">${cart[0].currency} <span id="total">${fmt(total)}</span></div>
-          </div>
-          <div>
-            <button id="checkoutBtn" class="btn btn-success">Procesar compra</button>
-          </div>
-        </div>
-      </div>
-    `;
 
+    // Summary (vacío)
     cartContainer.innerHTML = html;
+
+    // Actualizar resumen y total izquierdo
+    updateSummary();
 
     // Listeners: qty change
     const qtyInputs = cartContainer.querySelectorAll('.qty-input');
     qtyInputs.forEach((input, i) => {
-      input.addEventListener('input', () => {
+      input.addEventListener('change', () => {
         let v = parseInt(input.value);
         if (isNaN(v) || v < 1) v = 1;
         cart[i].qty = v;
         const newSubtotal = Number(cart[i].price) * v;
         const subtotalEl = cartContainer.querySelectorAll('.subtotal')[i];
         subtotalEl.textContent = `${cart[i].currency} ${fmt(newSubtotal)}`;
-        const totalEl = document.getElementById('total');
         const totalNow = cart.reduce((acc, it) => acc + Number(it.price) * Number(it.qty), 0);
-        totalEl.textContent = fmt(totalNow);
+        document.getElementById("summary-subtotal").textContent = fmt(totalNow);
+        document.getElementById("summary-total").textContent = fmt(totalNow);
+
         saveCart(); // guarda y actualiza badge
+        updateSummary();
       });
     });
 
@@ -117,25 +158,97 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
           render();
         }
+ feat/cart-badge-update
         actualizarBadge(); // agregado para actualizar al eliminar
+
+        actualizarBadge(); // 👈 agregado para actualizar al eliminar
+        updateSummary();
+ main
       });
     });
 
-    const checkoutBtn = document.getElementById('checkoutBtn');
-    if (checkoutBtn) {
-      checkoutBtn.addEventListener('click', () => {
-        alert('Proceso de compra (prototipo): gracias por su compra.');
+    // Conectar todos los botones de checkout presentes en la página
+    const checkoutBtns = document.querySelectorAll('#checkoutBtn');
+    checkoutBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+
+        // --- Validación; carrito no vacío ---
+        if (cart.length === 0) {
+          alert("Tu carrito está vacío.");
+          return;
+        }
+
+        // --- Validación: dirección completa ---
+        const nombre = document.querySelector('input[placeholder="Juan Pérez"]');
+        const departamento = document.querySelector('input[placeholder="Ej: Montevideo"]');
+        const localidad = document.querySelector('input[placeholder="Ej: Pocitos"]');
+        const calle = document.querySelector('input[placeholder="Av. Principal 1234"]');
+        const esquina = document.querySelector('input[placeholder="Ej: Paraguay"]');
+
+        if (
+          !nombre.value.trim() ||
+          !departamento.value.trim() ||
+          !localidad.value.trim() ||
+          !calle.value.trim() ||
+          !esquina.value.trim()
+        ) {
+          alert("Debes completar todos los campos de la dirección.");
+          return;
+        }
+
+        // --- Validación: forma de envío seleccionada ---
+        const envioSeleccionado = document.querySelector('input[name="envio"]:checked');
+        if (!envioSeleccionado) {
+          alert("Debes seleccionar un tipo de envío.");
+          return;
+        }
+
+        // --- Validación: cantidades válidas (ya tenés min=1 pero igual se valida) ---
+        for (let item of cart) {
+          if (!item.qty || item.qty <= 0) {
+            alert("Las cantidades deben ser mayores a cero.");
+            return;
+          }
+        }
+
+        // --- Validación: forma de pago seleccionada ---
+        const pagoSeleccionado = document.querySelector('input[name="pago"]:checked');
+        if (!pagoSeleccionado) {
+          alert("Debes seleccionar una forma de pago.");
+          return;
+        }
+
+        // Si más adelante agregás inputs extra para tarjeta o transferencia,
+
+        // --- SI TODO ES CORRECTO -> compra exitosa ---
+        alert("Compra realizada con éxito ✔️");
+
         localStorage.removeItem(cartKey);
         cart = [];
         cartContainer.innerHTML = '';
         emptyCart.style.display = 'block';
+ feat/cart-badge-update
         actualizarBadge(); // agregado para vaciar el badge
-      });
-    }
 
+        actualizarBadge();
+        updateSummary();
+ main
+      });
+    });
+
+
+ feat/cart-badge-update
     actualizarBadge(); // asegura sincronización inicial
+
+    actualizarBadge(); // 👈 asegura sincronización inicial
+    updateSummary(); // actualizar resumen derecho al renderizar
+ main
   }
 
   // Inicial render
   render();
+
+  // Listener para cambios en el tipo de envío (actualiza resumen en tiempo real)
+  const shippingForm = document.getElementById('shippingForm');
+  if (shippingForm) shippingForm.addEventListener('change', updateSummary);
 });
