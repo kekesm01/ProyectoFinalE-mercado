@@ -14,7 +14,12 @@ document.addEventListener("DOMContentLoaded", () => {
   // mostrar vacío inicialmente si corresponde (no retornamos para mantener listeners activos)
   if (cart.length === 0) {
     emptyCart.style.display = "block";
+ feat/cart-badge-update
+    actualizarBadge(); //  agregado para actualizar cuando está vacío
+    return;
+
     actualizarBadge(); // 👈 agregado para actualizar cuando está vacío
+ main
   }
 
   const fmt = (n) => {
@@ -23,8 +28,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function saveCart() {
     localStorage.setItem(cartKey, JSON.stringify(cart));
-    actualizarBadge(); // 👈 agregado para actualizar badge al guardar
+    actualizarBadge(); //  agregado para actualizar badge al guardar
   }
+
+ feat/cart-badge-update
+  // actualiza el badge del carrito (cantidad total)
 
   // Calcula y actualiza el resumen de costos (subtotal, envío, total)
   function updateSummary() {
@@ -60,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // 👇 Función nueva: actualiza el badge del carrito (cantidad total)
+ main
   function actualizarBadge() {
     const btnCarrito = document.getElementById('btnCarrito');
     if (!btnCarrito) return;
@@ -149,8 +158,12 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
           render();
         }
+ feat/cart-badge-update
+        actualizarBadge(); // agregado para actualizar al eliminar
+
         actualizarBadge(); // 👈 agregado para actualizar al eliminar
         updateSummary();
+ main
       });
     });
 
@@ -214,14 +227,22 @@ document.addEventListener("DOMContentLoaded", () => {
         cart = [];
         cartContainer.innerHTML = '';
         emptyCart.style.display = 'block';
+ feat/cart-badge-update
+        actualizarBadge(); // agregado para vaciar el badge
+
         actualizarBadge();
         updateSummary();
+ main
       });
     });
 
 
+ feat/cart-badge-update
+    actualizarBadge(); // asegura sincronización inicial
+
     actualizarBadge(); // 👈 asegura sincronización inicial
     updateSummary(); // actualizar resumen derecho al renderizar
+ main
   }
 
   // Inicial render
