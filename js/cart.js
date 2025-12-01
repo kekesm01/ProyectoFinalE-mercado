@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!cart || cart.length === 0) {
     emptyCart.style.display = "block";
-    actualizarBadge(); // 👈 agregado para actualizar cuando está vacío
+    actualizarBadge(); //  agregado para actualizar cuando está vacío
     return;
   }
 
@@ -22,10 +22,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function saveCart() {
     localStorage.setItem(cartKey, JSON.stringify(cart));
-    actualizarBadge(); // 👈 agregado para actualizar badge al guardar
+    actualizarBadge(); //  agregado para actualizar badge al guardar
   }
 
-  // 👇 Función nueva: actualiza el badge del carrito (cantidad total)
+  // actualiza el badge del carrito (cantidad total)
   function actualizarBadge() {
     const btnCarrito = document.getElementById('btnCarrito');
     if (!btnCarrito) return;
@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
           render();
         }
-        actualizarBadge(); // 👈 agregado para actualizar al eliminar
+        actualizarBadge(); // agregado para actualizar al eliminar
       });
     });
 
@@ -129,11 +129,11 @@ document.addEventListener("DOMContentLoaded", () => {
         cart = [];
         cartContainer.innerHTML = '';
         emptyCart.style.display = 'block';
-        actualizarBadge(); // 👈 agregado para vaciar el badge
+        actualizarBadge(); // agregado para vaciar el badge
       });
     }
 
-    actualizarBadge(); // 👈 asegura sincronización inicial
+    actualizarBadge(); // asegura sincronización inicial
   }
 
   // Inicial render
